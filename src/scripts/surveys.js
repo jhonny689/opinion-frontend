@@ -12,8 +12,11 @@ class Survey{
     }
     render_me(){
         const tableRow = document.createElement('tr');
+        tableRow.dataset.surveyId= this.id;
+        console.log(this.id);
+
         tableRow.innerHTML = `
-            <td data-survey-id="${this.id}">${this.title} </td>
+            <td> ${this.title} </td>
             <td> ${this.description}</td>
             <td> ${this.surveyor}</td>
             <td> ${this.due_date}</td>
@@ -40,5 +43,10 @@ class Survey{
             new Survey(dbSurvey.attributes);
         }
         Survey.render(container);
+    }
+
+    static parseQuestions(serveyId, container){
+        const questionsPromise = dbConnect(getURL(`questions?survey=${serveyId}`));
+        questionsPromise.then(dbQuestions => Question.renderAll(dbQuestions, container));
     }
 }

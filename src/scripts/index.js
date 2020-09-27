@@ -21,24 +21,58 @@ document.addEventListener('DOMContentLoaded', e => {
 function setupUserPage(container, survey){
     const categoryDD = document.querySelector('select#category');
     const surveyorDD = document.querySelector('select#surveyor');
-    
-    container.style.display='block';
-    survey.style.display='block';
+    const surveysTable = document.getElementById('surveys-table');
 
-    let categoryPromise = dbConnect(getURL('survey_categories/'));
-    categoryPromise.then(dbCategories => Category.createAll(dbCategories, categoryDD));
-
-    let surveryorPromise = dbConnect(getURL('users?admin=true'));
-    surveryorPromise.then(dbSurveyors => {
-        //debugger;
-        Surveyor.createAll(dbSurveyors, surveyorDD)
-    });
-
-    let surveysPromise = dbConnect(getURL('surveys?status=published'));
-    const surveysTable = document.getElementById('surveys-table')
-    surveysPromise.then(dbSurveys => {
-        Survey.createAll(dbSurveys, surveysTable)
-    })
-    
+    setVisibility(container, survey);
+    setCategories(categoryDD);
+    setSurveyors(surveyorDD);
+    setSurveysList(surveysTable);
+    setClickListener(surveysTable, survey);
 }
 
+function setClickListener(surveysTable, survey){
+    console.log("setting up click listener");
+    surveysTable.addEventListener('click', e => {
+        if(e.target.matches('td')){
+            console.log("should be able to catch click in td")
+            tableRowClickListener(e.target.parentNode, survey);
+        }
+    })
+}
+
+function tableRowClickListener(clickedRow, surveyContainer){
+    const surveyId = clickedRow.dataset.surveyId;
+    const surveyTitle = document.createElement('h2');
+    
+    surveyTitle.textContent = clickedRow.children[0].textContent;
+    surveyContainer.appendChild(surveyTitle);
+
+    Survey.parseQuestions(surveyId, surveyContainer);
+}
+
+function setVisibility(container, survey){
+    container.style.display='block';
+    survey.style.display='block';
+}
+
+function setCategories(categoryDD){
+    const categoryPromise = dbConnect(getURL('survey_categories/'));
+    categoryPromise.then(dbCategories => Category.createAll(dbCategories, categoryDD));
+}
+
+function setSurveyors(surveyorDD){
+    const surveryorPromise = dbConnect(getURL('users?admin=true'));
+    surveryorPromise.then(dbSurveyors => Surveyor.createAll(dbSurveyors, surveyorDD));
+}
+
+function setSurveysList(surveysTable){
+    const surveysPromise = dbConnect(getURL('surveys?status=published'));
+    const surveysTableBody = surveysTable.querySelector('tbody');
+    
+    surveysPromise.then(dbSurveys => {
+        Survey.createAll(dbSurveys, surveysTableBody);
+        $('#surveys-table').DataTable({
+            searching: false,
+        });
+    });
+}

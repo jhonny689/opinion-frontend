@@ -8,6 +8,10 @@
         <meta name="author" content="Jhonny & Roy">
 
         <link rel="stylesheet" href="src/styles/styles.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+ 
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.js" defer></script>
     </head>
 
     <body>
@@ -56,12 +60,17 @@
                     </form>
                     <div class="lookup-results surveysList">
                         <table class='data-table' id='surveys-table'>
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Surveyor</th>
-                                <th>Due date</th>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Surveyor</th>
+                                    <th>Due date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -78,5 +87,6 @@
     <script src="src/scripts/categories.js" defer></script>
     <script src="src/scripts/surveyors.js" defer></script>
     <script src="src/scripts/surveys.js" defer></script>
+    <script src="src/scripts/questions.js" defer></script>
     <script src="src/scripts/index.js" defer></script>
 </html>
