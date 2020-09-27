@@ -11,7 +11,72 @@
     </head>
 
     <body>
+        
+        <div class="main-container">
+            <div class="main-header">
+            
+            </div>
+            <div id="login-container" style="display:none">
+
+            </div>
+            <div id="admin-container" style="display:none">
+                <div class="container header" id="admin-header">
+
+                </div>
+                <div class="container nav-container">
+                    <div class="nav-card" id="drafts">
+                        <h3>Drafts</h3>
+                        <hr>
+                    </div>
+                    <div class="nav-card" id="published">
+                        <h3>Published</h3>
+                        <hr>
+                    </div>
+                    <div class="nav-card" id="closed">
+                        <h3>Closed</h3>
+                        <hr>
+                    </div>
+                </div>
+                
+            </div>
+            <div id="user-container" style="display:none">
+                <div class="container header" id="admin-header">
+
+                </div>
+                <div class="lookup-container">
+                    <form id="lookup-form" height="50px">
+                        <input type="text" name="title" placeholder="Title...">
+                        <select id="category" name="category" placeholder="Category...">
+                            <option value=""></option>
+                        </select>
+                        <select id="surveyor" name="surveyor" placeholder="Surveyor...">
+                            <option value=""></option>
+                        </select>
+                        <input type="submit">
+                    </form>
+                    <div class="lookup-results surveysList">
+                        <table class='data-table' id='surveys-table'>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Surveyor</th>
+                                <th>Due date</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div id="survey-container" class="container survey-container" style="display: none;">
+
+            </div>
+
+        </div>
 
     </body>
-    <script src="src/scripts/index.js"></script>
+    <script src="src/scripts/db.js" defer></script>
+    <script src="src/scripts/categories.js" defer></script>
+    <script src="src/scripts/surveyors.js" defer></script>
+    <script src="src/scripts/surveys.js" defer></script>
+    <script src="src/scripts/index.js" defer></script>
 </html>

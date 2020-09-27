@@ -1,0 +1,80 @@
+body{
+    width: 100vw;
+    height: 100vh;
+}
+
+div.main-container{
+    display:flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    background-color: grey;
+}
+
+div.main-header{
+    height: 150px;
+    background-color: bisque;
+}
+
+div#admin-container{
+    display:flex;
+    flex-direction: column;
+    height: 700px;
+    background-color: grey;
+}
+
+div.nav-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: space-around;
+}
+div.header{
+    height: 10%;
+    background-color: hotpink;
+}
+.container{
+    height: 100%;
+}
+
+div.nav-card{
+    outline: solid;
+    width: 25%;
+    height: 200px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: white;
+    box-shadow: 3px 3px 5px 6px #ccc;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+div h3{
+    text-align: center;
+}
+
+div.survey-container{
+    height: 400px;
+    width:95%;
+    margin: auto;
+    background-color: wheat;
+    box-shadow: 3px 3px 6px 3px #ccc;
+    border: 0.5px solid black;
+}
+
+input, select{
+    padding:20px 10px;
+}
+form {
+    align-content: stretch;
+    /* align-self: stretch; */
+}
+div.lookup-container{
+    text-align: center;
+}
+
+table.data-table{
+    margin: auto;
+    width: 100%;
+}
