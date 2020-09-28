@@ -47,6 +47,7 @@ class Survey{
 
     static parseQuestions(serveyId, container){
         const questionsPromise = dbConnect(getURL(`questions?survey=${serveyId}`));
+        console.log("before calling renderAll in the promise.then")
         questionsPromise.then(dbQuestions => Question.renderAll(dbQuestions, container));
     }
 }

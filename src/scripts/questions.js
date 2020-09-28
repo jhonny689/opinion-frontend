@@ -72,55 +72,139 @@ class Question{
 
     static qWSA(Qid, Qtext, Qoptions){
         const card = document.createElement('div');
-        const text = document.createElement('label');
-        const brk = document.createElement('br');
-        console.log(brk)
-        text.innerText = Qtext;
-        card.append(text);
-        card.append(brk);
+        this.createAndAppendQuest(Qtext, card);
+
         for(let option of Qoptions.split(', ')){
-            let radio = document.createElement('input');
-            radio.type ="radio";
-            radio.name =`"${Qid}"`;
-            radio.value = option;
-            let label = document.createElement('label');
-            label.for = `"${Qid}"`;
-            label.innerText = option;
-            
-            card.append(radio,label,brk);
+            this.createAndAppendInput("radio", Qid, option, card);
         }
-        console.log('card', card)
+        console.log('card', card);
+        
         return card;
     }
 
     static yesOrNo(Qid, Qtext){
-        const divvy = document.createElement('div');
-        divvy.innerHTML = Qtext;
-        return divvy;
-    }
-    static qWMA(Qtext){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
 
+        this.createAndAppendInput("radio", Qid, "Yes", card);
+        this.createAndAppendInput("radio", Qid, "No", card);
+        
+        return card;
     }
-    static ratingScale(Qtext){
+    static qWMA(Qid, Qtext, Qoptions){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
 
+        for(let option of Qoptions.split(', ')){
+            this.createAndAppendInput("checkbox", Qid, option, card);
+        }
+        console.log('card', card);
+        
+        return card;
     }
-    static likertScale(Qtext){
+    static ratingScale(Qid, Qtext){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
 
-    }
-    static dropDown(Qtext, Qoptions){
+        card.append(this.createScale(Qid));
 
-    }
-    static openEnded(Qtext){
-
-    }
-    static ranking(Qtext){
-
-    }
-    static imageChoice(Qtext, Qoptions){
-
-    }
-    static slider(Qtext){
-
+        return card;
     }
 
+    static likertScale(Qid, Qtext){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
+        const likert = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
+
+        for(let i = 0; i < 5; i++){
+            this.createAndAppendInput("radio", Qid, likert[i], card);
+        }
+
+        return card;
+    }
+    static dropDown(Qid, Qtext, Qoptions){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
+
+        //todo: add the dropdown builder
+        card.append(buildDropDown(Qid, Qoptions));
+        return card;
+    }
+    static openEnded(Qid, Qtext){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
+
+        //todo: add the textField;
+        card.append(document.createElement('textarea'));
+
+        return card;
+    }
+    static ranking(Qid, Qtext){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
+
+        //todo: add the ranking part;
+
+        return card;
+    }
+    static imageChoice(Qid, Qtext, Qoptions){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
+
+        //todo: add the Options  building for photos;
+
+        return card;
+    }
+    static slider(Qid, Qtext){
+        const card = document.createElement('div');
+        this.createAndAppendQuest(Qtext, card);
+
+        //todo: add the slider Builder;
+        
+        card.appendChild(this.createSlider());
+        
+        return card;
+    }
+    
+    static createAndAppendQuest(Qtext, container){
+        const text = document.createElement('label');
+        
+        text.innerText = Qtext;
+        container.append(text);
+        container.append(document.createElement('br'));
+    }
+    static createAndAppendInput(type, name, label, container){
+        let option = document.createElement('input');
+        option.type =type;
+        option.name = name;
+        option.value = label;
+        let labelTag = document.createElement('label');
+        labelTag.for = name;
+        labelTag.innerText = label;
+        
+        container.append(option,labelTag,document.createElement('br'));
+    }
+
+    static createScale(Qid){
+        const ratingDiv = document.createElement('div');
+        ratingDiv.classList.add("rating");
+        for(let i = 0; i < 10; i++){
+            this.createAndAppendInput("radio", i+1, i+1, ratingDiv);
+        }
+        return ratingDiv;
+    }
+    
+    static createSlider(Qid){
+        //<input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        //const sliderDiv = document.createElement('div');
+        const rangeInput = document.createElement('input');
+        rangeInput.type="range";
+        rangeInput.min="1";
+        rangeInput.max="100";
+        range.Input.value = "50";
+        rangeInput.classList.add("slider");
+        rangeInput.classList.id = Qid;
+        
+        return rangeInput;
+    }
 }

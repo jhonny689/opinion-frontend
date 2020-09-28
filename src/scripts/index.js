@@ -46,7 +46,7 @@ function tableRowClickListener(clickedRow, surveyContainer){
     
     surveyTitle.textContent = clickedRow.children[0].textContent;
     surveyContainer.appendChild(surveyTitle);
-
+    console.log("before parsing the Questions");
     Survey.parseQuestions(surveyId, surveyContainer);
 }
 
