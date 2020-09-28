@@ -1,3 +1,4 @@
+
 body{
     width: 100vw;
     height: 100vh;
@@ -6,21 +7,35 @@ body{
 div.main-container{
     display:flex;
     flex-direction: column;
-    width: 90%;
+    width: 60%;
     margin: auto;
-    background-color: grey;
+    background-color: white;
 }
 
 div.main-header{
     height: 150px;
-    background-color: bisque;
+    background-color: white;
+    border: 0.5px solid #023e8a;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 3px 3px 6px 3px #ccc;
+}
+
+button.log-out{
+    margin: 20px;
+    float: right;
+    width: 80px;
+    height: 32px;
+    background-color: #0096c7;
+    color: white;
+    border-radius: 5px;
 }
 
 div#admin-container{
     display:flex;
     flex-direction: column;
     height: 700px;
-    background-color: grey;
+    background-color: white;
 }
 
 div.nav-container{
@@ -55,23 +70,32 @@ div h3{
 }
 
 div.survey-container{
-    height: 400px;
-    width:95%;
+    min-height: 400px;
+    width: 95%;
     margin: auto;
-    background-color: wheat;
+    background-color:white;
     box-shadow: 3px 3px 6px 3px #ccc;
-    border: 0.5px solid black;
+    border: 0.5px solid #023e8a;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 20px;
 }
 
 input, select{
-    padding:20px 10px;
+    padding:5px 10px;
 }
 form {
     align-content: stretch;
     /* align-self: stretch; */
 }
 div.lookup-container{
+    margin-top: 10px;
     text-align: center;
+    background-color: #0096c7;
+    border: 0.5px solid #023e8a;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 3px 3px 6px 3px #ccc;
 }
 
 table.data-table{
