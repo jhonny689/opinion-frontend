@@ -73,8 +73,11 @@ class Question{
     static qWSA(Qid, Qtext, Qoptions){
         const card = document.createElement('div');
         const text = document.createElement('label');
+        const brk = document.createElement('br');
+        console.log(brk)
         text.innerText = Qtext;
         card.append(text);
+        card.append(brk);
         for(let option of Qoptions.split(', ')){
             let radio = document.createElement('input');
             radio.type ="radio";
@@ -84,7 +87,7 @@ class Question{
             label.for = `"${Qid}"`;
             label.innerText = option;
             
-            card.append(radio,label,document.createElement('br'));
+            card.append(radio,label,brk);
         }
         console.log('card', card)
         return card;
