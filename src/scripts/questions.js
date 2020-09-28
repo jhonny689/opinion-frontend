@@ -126,7 +126,6 @@ class Question{
         const card = document.createElement('div');
         this.createAndAppendQuest(Qtext, card);
 
-        //todo: add the dropdown builder
         card.append(buildDropDown(Qid, Qoptions));
         return card;
     }
@@ -134,7 +133,6 @@ class Question{
         const card = document.createElement('div');
         this.createAndAppendQuest(Qtext, card);
 
-        //todo: add the textField;
         card.append(document.createElement('textarea'));
 
         return card;
@@ -158,8 +156,6 @@ class Question{
     static slider(Qid, Qtext){
         const card = document.createElement('div');
         this.createAndAppendQuest(Qtext, card);
-
-        //todo: add the slider Builder;
         
         card.appendChild(this.createSlider());
         
@@ -206,5 +202,17 @@ class Question{
         rangeInput.classList.id = Qid;
         
         return rangeInput;
+    }
+
+    static buildDropDown(Qid, Qoptions){
+        const selectEL = document.createElement('select');
+        selectEL.name = Qid;
+        selectEL.id = Qid;
+        
+        for(let option of Qoptions.split(', ')){
+            selectEL.innerHTML += `<option value="${option}">${option}</option>`;
+        }
+
+        return selectEL;
     }
 }
