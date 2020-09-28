@@ -16,6 +16,7 @@ class Question{
             new Question(question);
         }
         this.fillContainer(container);
+        this.prototype.setupDragAndDrop();
     };
 
     static buildHTML(Qid, Qtype, Qtext, Qchoices){
@@ -126,7 +127,7 @@ class Question{
         const card = document.createElement('div');
         this.createAndAppendQuest(Qtext, card);
 
-        card.append(buildDropDown(Qid, Qoptions));
+        card.append(this.buildDropDown(Qid, Qoptions));
         return card;
     }
     static openEnded(Qid, Qtext){
@@ -137,13 +138,33 @@ class Question{
 
         return card;
     }
-    static ranking(Qid, Qtext){
+    static ranking(Qid, Qtext, Qoptions){
         const card = document.createElement('div');
         this.createAndAppendQuest(Qtext, card);
 
         //todo: add the ranking part;
+        const divContainer = document.createElement('div');
+        divContainer.classList.add("source-container");
 
+        let index = 0;
+        for(let option of Qoptions.split(', ')){
+            this.createAndAppendDraggableItem(++index, Qid, option, divContainer);
+        }
+        card.append(divContainer);
         return card;
+    }
+
+    static createAndAppendDraggableItem(index, Qid, option, container){
+        const sourceDiv = document.createElement('div');
+        sourceDiv.classList.add("source");
+        sourceDiv.innerHTML = `<span>${index}</span>`;
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add("item");
+        itemDiv.innerHTML = `<p>${option}</p>`;
+
+        sourceDiv.append(itemDiv);
+        container.append(sourceDiv);
+
     }
     static imageChoice(Qid, Qtext, Qoptions){
         const card = document.createElement('div');
@@ -171,21 +192,22 @@ class Question{
     }
     static createAndAppendInput(type, name, label, container){
         let option = document.createElement('input');
-        option.type =type;
+        option.type = type;
         option.name = name;
+        option.id = name+label;
         option.value = label;
         let labelTag = document.createElement('label');
-        labelTag.for = name;
+        labelTag.htmlFor = name+label;
         labelTag.innerText = label;
         
-        container.append(option,labelTag,document.createElement('br'));
+        container.append(option,labelTag, document.createElement('br'));
     }
 
     static createScale(Qid){
         const ratingDiv = document.createElement('div');
         ratingDiv.classList.add("rating");
-        for(let i = 0; i < 10; i++){
-            this.createAndAppendInput("radio", i+1, i+1, ratingDiv);
+        for(let i = 9; i >= 0; i--){
+            this.createAndAppendInput("radio", Qid, i+1, ratingDiv);
         }
         return ratingDiv;
     }
@@ -197,7 +219,7 @@ class Question{
         rangeInput.type="range";
         rangeInput.min="1";
         rangeInput.max="100";
-        range.Input.value = "50";
+        rangeInput.value = "50";
         rangeInput.classList.add("slider");
         rangeInput.classList.id = Qid;
         

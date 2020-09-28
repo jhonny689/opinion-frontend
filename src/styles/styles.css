@@ -105,12 +105,13 @@ table.data-table{
 
 div.rating{
     position: relative;
+    width: fit-content;
     display: flex;
     flex-direction: row-reverse;
     margin-top: 10px;
     border: 1px solid #000;
     box-sizing: border-box;
-    background: linear-gradient(to right, #f00, #ff0, #00f);
+    background: linear-gradient(to right, #0096c7, #004cc7, rgb(12, 12, 121));
 }
 
 div.rating input{
@@ -132,8 +133,8 @@ div.rating label{
     border-right: 1px solid #000;
 }
 
-div.rating input[type='radio']:hover ~ label,
-div.rating input[type='radio']:checked ~ label
+.rating input[type="radio"]:hover ~ label,
+.rating input[type="radio"]:checked ~ label
 {
     background: transparent;
 }
