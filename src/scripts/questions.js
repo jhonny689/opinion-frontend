@@ -5,6 +5,7 @@ class Question{
         this.id = id;
         this.survey_id = survey_id;
         this.htmlEL = Question.buildHTML(id, question_type_id, question_text, choices);
+        this.answered = false;
         
         Question.all.push(this);
     };
@@ -66,15 +67,18 @@ class Question{
         return qHTML;
     };
 
-    static fillContainer(container){
-        for(let quest of this.all){
-            console.log("my question html element:",quest.htmlEL)
-            container.appendChild(quest.htmlEL);
-        }
+    static fillContainer(container, index = 0){
+        // for (let quest of this.all){
+        //     console.log("my question html element:",quest.htmlEL)
+        //     container.appendChild(quest.htmlEL);
+        // }
+        console.log("fillContainer with index = ", index);
+        container.appendChild(this.all[index].htmlEL)
     };
 
     static qWSA(Qid, Qtext, Qoptions){
-        const card = document.createElement('div');
+        // const card = document.createElement('div');
+        const card = document.createElement('form');
         this.createAndAppendQuest(Qtext, card);
 
         for(let option of Qoptions.split(', ')){
@@ -133,10 +137,14 @@ class Question{
         return card;
     }
     static openEnded(Qid, Qtext){
-        const card = document.createElement('div');
-        this.createAndAppendQuest(Qtext, card);
+        // const card = document.createElement('div');
+        const card = document.createElement('form');
 
-        card.append(document.createElement('textarea'));
+    
+        this.createAndAppendQuest(Qtext, card);
+        let input = document.createElement('textarea');
+        input.name = "answer";
+        card.append(input);
 
         return card;
     }
@@ -242,7 +250,7 @@ class Question{
 
     static addDisabledButton(parentNode, text) {
         const nextButton = document.createElement('button');
-        nextButton.classList.add('next-button');
+        nextButton.classList.add('load-next');
         // nextButton.setAttribute('disabled', 'true');
         nextButton.textContent = text;
         parentNode.appendChild(nextButton);

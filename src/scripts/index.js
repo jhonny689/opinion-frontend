@@ -38,6 +38,15 @@ function setClickListener(surveysTable, survey){
             tableRowClickListener(e.target.parentNode, survey);
         }
     })
+    survey.addEventListener('click', e => {
+        let i = 0;
+        if(e.target.matches('.load-next')){
+            if(e.target.previousSibling.answer.value && e.target.previousSibling.answer.value != ""){
+                // answer.prepareAnswerSheet()
+                Question.fillContainer(survey, ++i)
+            }
+        }
+    })
 }
 
 function tableRowClickListener(clickedRow, surveyContainer){
