@@ -12,13 +12,14 @@
   
   .source-container{
     width:300px;
-    border:1px solid #ccc;
+    border:1px solid#023e8a;
+    margin: auto;
   }
   .item{
     height:30px;
-    border:1px solid #ccc;
+    border:1px solid #023e8a;
     margin:2px;
-    background-color:lightyellow;
+    background-color: white;
     cursor:move;
   }
   .item p{
@@ -35,17 +36,17 @@
   
   .source{
     height:36px;
-    border:1px solid #ccc;
+    border:1px solid #023e8a;
     margin:5px;
-    background:#f1f1f1;
-    border-left:30px solid  #ccc;
+    background: #0096c7;
+    border-left:30px solid  #0096c7;
     position:relative;
   }
   .ui-droppable-active{
     border-color:#bbb;
   }
   .ui-droppable-hover{
-    background:#ddd;
+    background:#0096c7;
   }
   .source span{
         position: absolute;

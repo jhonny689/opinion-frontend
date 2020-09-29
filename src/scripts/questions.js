@@ -21,7 +21,7 @@ class Question{
 
     static buildHTML(Qid, Qtype, Qtext, Qchoices){
         const qHTML = document.createElement('div');
-        qHTML.classList.add('question-card');
+        qHTML.classList.add('question-card', 'animate__animated');
 
         let qBody = "";
         switch(Qtype){
@@ -60,6 +60,8 @@ class Question{
         }
         console.log('qBody before append', qBody);
         qHTML.appendChild(qBody);
+
+        this.addDisabledButton(qHTML, 'Next >>')
         console.log('qHTML after append', qHTML);
         return qHTML;
     };
@@ -236,5 +238,13 @@ class Question{
         }
 
         return selectEL;
+    }
+
+    static addDisabledButton(parentNode, text) {
+        const nextButton = document.createElement('button');
+        nextButton.classList.add('next-button');
+        // nextButton.setAttribute('disabled', 'true');
+        nextButton.textContent = text;
+        parentNode.appendChild(nextButton);
     }
 }

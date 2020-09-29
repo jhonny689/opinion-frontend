@@ -3,6 +3,9 @@ body{
     width: 100vw;
     height: 100vh;
 }
+* {
+    font-family: 'Kumbh Sans', sans-serif;
+ }
 
 div.main-container{
     display:flex;
@@ -109,9 +112,9 @@ div.rating{
     display: flex;
     flex-direction: row-reverse;
     margin-top: 10px;
-    border: 1px solid #000;
+    border: 0.5px solid #000;
     box-sizing: border-box;
-    background: linear-gradient(to right, #0096c7, #004cc7, rgb(12, 12, 121));
+    background: linear-gradient(to right, #00b4d8, #0077b6, #023e8a);
 }
 
 div.rating input{

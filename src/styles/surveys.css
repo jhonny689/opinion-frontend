@@ -1,0 +1,64 @@
+div.question-card {
+    width: 65%;
+    border: 0.5px solid #023e8a;
+    margin: auto;
+    padding: 30px;
+    min-height: 250px;
+    box-shadow: 5px 10px 6px 3px #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.survey-container > h2 {
+    text-align: center;
+    color: #023e8a;
+}
+
+.next-button {
+    color: white;
+    height: 25px;
+    background-color: #0096c7;
+    display: block;
+    align-self: flex-end;
+    margin-top: 30px;
+    margin-right: 20px;
+    border: 0.5px solid #023e8a;
+    border-radius: 5px;
+}
+
+div.question-card label {
+    font-size: 18px;
+}
+
+div.question-card textarea, div.question-card select, 
+div.question-card input.slider {
+    display: block;
+    margin: auto;
+    width: 290px;
+    margin-top: 15px;
+}
+
+
+
+/* 
+
+JS to animate question Cards
+
+ --> add 'animate__flip' to question cards' classList
+
+document.addEventListener('click', (e) => {
+    console.log(e.target)
+    if (e.target.matches(".next-button")){
+        e.target.parentElement.classList.add('animate__flip')
+        e.target.disabled = true;
+        e.target.parentElement.innerHTML = "";
+    }
+}) 
+
+document.querySelector('.next-button').removeAttribute('disabled')
+
+*/
