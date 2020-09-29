@@ -39,12 +39,27 @@ function setClickListener(surveysTable, survey){
         }
     })
     survey.addEventListener('click', e => {
+        console.log("you havew clicked:",e.target);
+        //debugger;
         let i = 0;
         if(e.target.matches('.load-next')){
             if(e.target.previousSibling.answer.value && e.target.previousSibling.answer.value != ""){
-                // answer.prepareAnswerSheet()
-                Question.fillContainer(survey, ++i)
+                Answer.prepareAnswerSheet()
+                e.target.parentElement.classList.add("animate__flip");
+                e.target.parentElement.style = "background-color:#fff";
+                let intervalID = setInterval(() => {
+                    Question.fillContainer(survey, ++i);
+                    e.target.parentElement.classList.remove("animate__flip");
+                    clearInterval(intervalID);
+                },  800);
             }
+        }else if(e.target.matches('.btn_submit')){
+            //Answer.submitAnswerSheet();
+        }else if(e.target.matches('.btn_cancel')){
+            alert("weirrd behavior")
+            console.log("inside cancel button functionality");
+            Answer.resetAnswerSheet();
+            Question.fillContainer(survey,0);
         }
     })
 }

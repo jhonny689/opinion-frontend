@@ -68,13 +68,32 @@ class Question{
     };
 
     static fillContainer(container, index = 0){
-        // for (let quest of this.all){
-        //     console.log("my question html element:",quest.htmlEL)
-        //     container.appendChild(quest.htmlEL);
-        // }
-        console.log("fillContainer with index = ", index);
-        container.appendChild(this.all[index].htmlEL)
+        if (index < this.all.length){
+            console.log("fillContainer with index = ", index);
+            container.innerHTML="";
+            container.appendChild(this.all[index].htmlEL);
+        }else{
+            container.innerHTML="";
+            container.appendChild(Question.getLastQuestion());
+        }
+        
     };
+
+    static getLastQuestion(){
+        const qHTML = document.createElement('div');
+        qHTML.classList.add('question-card', 'animate__animated');
+        const card = document.createElement('div');
+        const button_cancel = document.createElement('button');
+        button_cancel.classList.add('btn_cancel');
+        button_cancel.textContent = "Cancel";
+        const button_submit = document.createElement('button');
+        button_submit.classList.add('btn_submit');
+        button_submit.textContent = "Submit";
+
+        card.append(button_cancel, button_submit);
+        qHTML.append(card)
+        return qHTML;
+    }
 
     static qWSA(Qid, Qtext, Qoptions){
         // const card = document.createElement('div');
