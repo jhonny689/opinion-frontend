@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', e => {
-    const loggedInUser = "surveyee";
+    // const loggedInUser = "surveyee";
+    const loggedInUser = "admin";
     const loginPage = document.getElementById('login-container');
     const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
     const surveyContainer = document.getElementById('survey-container');
     
-    adminPage.style.display='none';
+    // adminPage.style.display='none';
     if (loggedInUser === "admin"){
         setupAdminPage(adminPage, surveyContainer);
     }else if(loggedInUser === "surveyee"){
@@ -99,4 +100,31 @@ function setSurveysList(surveysTable){
             searching: false,
         });
     });
+}
+
+function setupAdminPage(adminContainer, contentContainer){
+    const draftSurvey = document.querySelector('div#drafts');
+    const publishedSurvey = document.querySelector('div#published');
+    const closedSurvey = document.querySelector('div#closed');
+
+    setVisibility(adminContainer, contentContainer);
+    renderDrafts(draftSurvey);
+    renderPublished(publishedSurvey);
+    renderClosed(closedSurvey);
+}
+
+function renderDrafts(container){
+    const surveyPromise = dbConnect(getURL('users/1?surveys=draft'));
+
+    surveyPromise.then(data => console.log("For Drafts: ", data))
+}
+
+function renderPublished(container){
+    const surveyPromise = dbConnect(getURL('users/1?surveys=published'));
+    surveyPromise.then(data => console.log("For Published: ", data))
+}
+
+function renderClosed(container){
+    const surveyPromise = dbConnect(getURL('users/1?surveys=closed'));
+    surveyPromise.then(data => console.log("For Closed: ", data))
 }
