@@ -124,7 +124,7 @@ function renderDrafts(container){
 }
 
 function renderPublished(container){
-    const surveyPromise = dbConnect(getURL('users/1?surveys=published'));
+    const surveyPromise = dbConnect(getURL('users/3?surveys=published'));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['published_surveys'], container);
     });
