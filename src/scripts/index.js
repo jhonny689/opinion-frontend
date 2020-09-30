@@ -115,16 +115,21 @@ function setupAdminPage(adminContainer, contentContainer){
 
 function renderDrafts(container){
     const surveyPromise = dbConnect(getURL('users/1?surveys=draft'));
-
-    surveyPromise.then(data => console.log("For Drafts: ", data))
+    surveyPromise.then(adminSurveys => {
+        Survey.renderAdminSurveys(adminSurveys['survey_drafts'], container);
+    });
 }
 
 function renderPublished(container){
     const surveyPromise = dbConnect(getURL('users/1?surveys=published'));
-    surveyPromise.then(data => console.log("For Published: ", data))
+    surveyPromise.then(adminSurveys => {
+        Survey.renderAdminSurveys(adminSurveys['published_surveys'], container);
+    });
 }
 
 function renderClosed(container){
     const surveyPromise = dbConnect(getURL('users/1?surveys=closed'));
-    surveyPromise.then(data => console.log("For Closed: ", data))
+    surveyPromise.then(adminSurveys => {
+        Survey.renderAdminSurveys(adminSurveys['closed_surveys'], container);
+    });
 }

@@ -50,4 +50,23 @@ class Survey{
         console.log("before calling renderAll in the promise.then")
         questionsPromise.then(dbQuestions => Question.renderAll(dbQuestions, container));
     }
+
+    static renderAdminSurveys(dbObject, container){
+        const surveyUl = document.createElement('Ul');
+
+        for (const survey of dbObject){
+            const surveyLi = this.createSurveyLi(survey);
+            surveyUl.append(surveyLi);
+        }
+        
+        container.append(surveyUl)
+    }
+
+    static createSurveyLi(survey){
+        const surveyLi = document.createElement('li');
+        surveyLi.textContent = survey.title;
+        surveyLi.dataset.id = survey.id; 
+        surveyLi.classList.add('admin-survey-list');
+        return surveyLi;
+    }
 }
