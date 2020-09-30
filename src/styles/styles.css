@@ -2,6 +2,7 @@
 body{
     width: 100vw;
     height: 100vh;
+    cursor: pointer;
 }
 * {
     font-family: 'Kumbh Sans', sans-serif;
@@ -24,7 +25,7 @@ div.main-header{
     box-shadow: 3px 3px 6px 3px #ccc;
 }
 
-button.log-out{
+button.log-out {
     margin: 20px;
     float: right;
     width: 80px;
@@ -32,6 +33,10 @@ button.log-out{
     background-color: #0096c7;
     color: white;
     border-radius: 5px;
+}
+
+button, input, select {
+    cursor: pointer;
 }
 
 div#admin-container{
@@ -68,12 +73,13 @@ div.nav-card{
     padding-right: 5px;
 }
 
-.nav-card > h3 {
+/* .nav-card > h3 {
     color: #023e8a;
-}
+} */
 
 li.admin-survey-list:hover {
     color: #023e8a;
+    font-weight: bold;
     /* font-size: 120%; */
 }
 
@@ -153,4 +159,5 @@ div.rating label{
 
 tbody > tr:hover {
     color: #0096c7;
+    font-weight: bold;
 }
