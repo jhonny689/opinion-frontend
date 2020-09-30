@@ -1,5 +1,6 @@
 class Question{
     static all = [];
+    static surveyTemp = [];
     
     constructor({id, survey_id, question_type_id, question_text, choices}){
         this.id = id;
@@ -10,6 +11,12 @@ class Question{
         
         Question.all.push(this);
     };
+
+    static prepareSurvey(jsonQuestion){
+        let newQuest = new Question(jsonQuestion);
+        this.surveyTemp.push(newQuest);
+        return newQuest.htmlEL.firstElementChild;
+    }
 
     static renderAll(dbQuestions, container){
         Question.all = [];
@@ -167,6 +174,7 @@ class Question{
 
         return card;
     }
+
     static dropDown(Qid, Qtype, Qtext, Qoptions){
         const card = document.createElement('form');
         card.dataset.questionId = Qid;
@@ -177,6 +185,7 @@ class Question{
         card.append(this.buildDropDown(Qid, Qoptions));
         return card;
     }
+
     static openEnded(Qid, Qtype, Qtext){
         // const card = document.createElement('div');
         const card = document.createElement('form');
@@ -190,6 +199,7 @@ class Question{
 
         return card;
     }
+
     static ranking(Qid, Qtype, Qtext, Qoptions){
         const card = document.createElement('div');
         card.dataset.questionId = Qid;
@@ -221,6 +231,7 @@ class Question{
         container.append(sourceDiv);
 
     }
+
     static imageChoice(Qid, Qtype, Qtext, Qoptions){
         const card = document.createElement('form');
         card.dataset.questionId = Qid;
@@ -232,6 +243,7 @@ class Question{
 
         return card;
     }
+
     static slider(Qid, Qtype, Qtext){
         const card = document.createElement('form');
         card.dataset.questionId = Qid;
@@ -243,7 +255,7 @@ class Question{
         
         return card;
     }
-    
+
     static createAndAppendQuest(Qtext, container){
         const text = document.createElement('label');
 
@@ -251,6 +263,7 @@ class Question{
         container.append(text);
         container.append(document.createElement('br'));
     }
+
     static createAndAppendInput(type, name, label, container){
         let option = document.createElement('input');
         option.type = type;
@@ -272,7 +285,7 @@ class Question{
         }
         return ratingDiv;
     }
-    
+
     static createSlider(Qid){
         //<input type="range" min="1" max="100" value="50" class="slider" id="myRange">
         //const sliderDiv = document.createElement('div');

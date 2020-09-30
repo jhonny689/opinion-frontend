@@ -141,3 +141,46 @@ div.rating label{
 {
     background: transparent;
 }
+
+div.new-survey-btn,div.btn {
+    width: 90%;
+    margin: auto;
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+h1.survey-title {
+    margin: auto;
+    padding: 10px;
+}
+
+[contenteditable = "true"].single-line {
+    white-space: nowrap;
+    width: 300px;
+    overflow: hidden;
+}
+[contenteditable = "true"].single-line br{
+    display: none;
+}
+[contenteditable = "true"].single-line *{
+    display: inline;
+    white-space: nowrap;
+}
+div.form-box{
+    width: 85%;
+    margin: auto;
+    /*border: 1px solid grey;*/
+    border-style: inset;
+    padding: 10px;
+    box-shadow: -5px -5px 10px grey inset;
+}
+
+div[contenteditable = "true"].text-box {
+    width: 100%;
+    /*border: 1px solid #000;*/
+    border-style: inset;
+    padding: 8px 0px 8px 0px;
+}

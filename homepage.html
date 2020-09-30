@@ -8,15 +8,18 @@
         <meta name="author" content="Jhonny & Roy">
 
         <link rel="stylesheet" href="src/styles/styles.css">
+        <link rel="stylesheet" href="src/styles/customSelect.css">
         <link rel="stylesheet" href="src/styles/surveys.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <link rel="stylesheet" href="src/styles/dragAndDrop.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" integrity="sha512-SUJFImtiT87gVCOXl3aGC00zfDl6ggYAw5+oheJvRJ8KBXZrr/TMISSdVJ5bBarbQDRC2pR5Kto3xTR0kpZInA==" crossorigin="anonymous" />
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
  
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" defer></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js" integrity="sha512-G8JE1Xbr0egZE5gNGyUm1fF764iHVfRXshIoUWCTPAbKkkItp/6qal5YAHXrxEu4HNfPTQs6HOu3D5vCGS1j3w==" crossorigin="anonymous"></script>
     </head>
 
     <body style="background-image: url(assets/images/white-background.png); background-repeat: repeat-y; background-size: cover;">
@@ -48,6 +51,7 @@
                     </div>
                 </div>
                 
+                <div class="btn new-survey-btn">Create New Survey</div>
             </div>
             <div id="user-container" style="display:none">
                 <!-- <div class="container header" id="admin-header">
@@ -83,7 +87,7 @@
 
             </div>
             <div id="survey-container" class="container survey-container" style="display: none;">
-
+                <canvas id="myChart"></canvas>
             </div>
 
         </div>
@@ -96,5 +100,6 @@
     <script src="src/scripts/questions.js" defer></script>
     <script src="src/scripts/rankingFunctionality.js" defer></script>
     <script src="src/scripts/answer.js" defer></script>
+    <script src="src/scripts/analysis.js" defer></script>
     <script src="src/scripts/index.js" defer></script>
 </html>
