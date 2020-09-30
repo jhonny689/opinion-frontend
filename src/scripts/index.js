@@ -37,24 +37,26 @@ function setClickListener(surveysTable, survey){
             console.log("should be able to catch click in td")
             tableRowClickListener(e.target.parentNode, survey);
         }
-    })
+    });
+    let i = 0;
     survey.addEventListener('click', e => {
-        console.log("you havew clicked:",e.target);
         //debugger;
-        let i = 0;
         if(e.target.matches('.load-next')){
-            if(e.target.previousSibling.answer.value && e.target.previousSibling.answer.value != ""){
-                Answer.prepareAnswerSheet()
+            if(Question.answered(e.target.previousSibling)){
+                console.log("you have clicked:",e.target," and you got to calling prepare Answer sheet");
+                Answer.prepareAnswerSheet(e.target.previousSibling)
                 e.target.parentElement.classList.add("animate__flip");
                 e.target.parentElement.style = "background-color:#fff";
+                console.log("you have clicked:",e.target," and you got to after prepare Answer sheet");
                 let intervalID = setInterval(() => {
+                    console.log(i);
                     Question.fillContainer(survey, ++i);
                     e.target.parentElement.classList.remove("animate__flip");
                     clearInterval(intervalID);
                 },  800);
             }
         }else if(e.target.matches('.btn_submit')){
-            //Answer.submitAnswerSheet();
+            Answer.submitAnswerSheet();
         }else if(e.target.matches('.btn_cancel')){
             alert("weirrd behavior")
             console.log("inside cancel button functionality");
