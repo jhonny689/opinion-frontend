@@ -4,6 +4,7 @@ class Question{
     constructor({id, survey_id, question_type_id, question_text, choices}){
         this.id = id;
         this.survey_id = survey_id;
+        this.question_type_id = question_type_id;
         this.htmlEL = Question.buildHTML(id, question_type_id, question_text, choices);
         this.answered = false;
         
@@ -17,7 +18,6 @@ class Question{
             new Question(question);
         }
         this.fillContainer(container);
-        this.prototype.setupDragAndDrop();
     };
 
     static buildHTML(Qid, Qtype, Qtext, Qchoices){
@@ -27,34 +27,34 @@ class Question{
         let qBody = "";
         switch(Qtype){
             case 1:
-                qBody = this.qWSA(Qid, Qtext, Qchoices);
+                qBody = this.qWSA(Qid, Qtype, Qtext, Qchoices);
                 break;
             case 2:
-                qBody = this.yesOrNo(Qid, Qtext);
+                qBody = this.yesOrNo(Qid, Qtype, Qtext);
                 break;
             case 3:
-                qBody = this.qWMA(Qid, Qtext, Qchoices);
+                qBody = this.qWMA(Qid, Qtype, Qtext, Qchoices);
                 break;
             case 4:
-                qBody = this.ratingScale(Qid, Qtext);
+                qBody = this.ratingScale(Qid, Qtype, Qtext);
                 break;
             case 5:
-                qBody = this.likertScale(Qid, Qtext);
+                qBody = this.likertScale(Qid, Qtype, Qtext);
                 break;
             case 6:
-                qBody = this.dropDown(Qid, Qtext, Qchoices);
+                qBody = this.dropDown(Qid, Qtype, Qtext, Qchoices);
                 break;
             case 7:
-                qBody = this.openEnded(Qid, Qtext);
+                qBody = this.openEnded(Qid, Qtype, Qtext);
                 break;
             case 8:
-                qBody = this.ranking(Qid, Qtext, Qchoices);
+                qBody = this.ranking(Qid, Qtype, Qtext, Qchoices);
                 break;
             case 9:
-                qBody = this.imageChoice(Qid, Qtext, Qchoices);
+                qBody = this.imageChoice(Qid, Qtype, Qtext, Qchoices);
                 break;
             case 10:
-                qBody = this.slider(Qid, Qtext);
+                qBody = this.slider(Qid, Qtype, Qtext);
                 break;
             default:
                 break;
@@ -69,9 +69,13 @@ class Question{
 
     static fillContainer(container, index = 0){
         if (index < this.all.length){
-            console.log("fillContainer with index = ", index);
+            console.log("fillContainer with index = ", index, "and type = ",this.all[index].question_type_id);
             container.innerHTML="";
             container.appendChild(this.all[index].htmlEL);
+            if(this.all[index].question_type_id === 8){
+                //debugger;
+                this.prototype.setupDragAndDrop();
+            }
         }else{
             container.innerHTML="";
             container.appendChild(Question.getLastQuestion());
@@ -95,9 +99,12 @@ class Question{
         return qHTML;
     }
 
-    static qWSA(Qid, Qtext, Qoptions){
+    static qWSA(Qid, Qtype, Qtext, Qoptions){
         // const card = document.createElement('div');
         const card = document.createElement('form');
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
+
         this.createAndAppendQuest(Qtext, card);
 
         for(let option of Qoptions.split(', ')){
@@ -108,8 +115,11 @@ class Question{
         return card;
     }
 
-    static yesOrNo(Qid, Qtext){
-        const card = document.createElement('div');
+    static yesOrNo(Qid, Qtype, Qtext){
+        const card = document.createElement('form');
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
+
         this.createAndAppendQuest(Qtext, card);
 
         this.createAndAppendInput("radio", Qid, "Yes", card);
@@ -117,8 +127,12 @@ class Question{
         
         return card;
     }
-    static qWMA(Qid, Qtext, Qoptions){
-        const card = document.createElement('div');
+
+    static qWMA(Qid, Qtype, Qtext, Qoptions){
+        const card = document.createElement('form');
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
+
         this.createAndAppendQuest(Qtext, card);
 
         for(let option of Qoptions.split(', ')){
@@ -128,8 +142,11 @@ class Question{
         
         return card;
     }
-    static ratingScale(Qid, Qtext){
-        const card = document.createElement('div');
+    static ratingScale(Qid, Qtype, Qtext){
+        const card = document.createElement('form');
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
+
         this.createAndAppendQuest(Qtext, card);
 
         card.append(this.createScale(Qid));
@@ -138,9 +155,11 @@ class Question{
     }
 
     static likertScale(Qid, Qtext){
-        const card = document.createElement('div');
-        this.createAndAppendQuest(Qtext, card);
         const likert = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
+        const card = document.createElement('form');
+        card.dataset.questionId = Qid;
+
+        this.createAndAppendQuest(Qtext, card);
 
         for(let i = 0; i < 5; i++){
             this.createAndAppendInput("radio", Qid, likert[i], card);
@@ -148,17 +167,21 @@ class Question{
 
         return card;
     }
-    static dropDown(Qid, Qtext, Qoptions){
-        const card = document.createElement('div');
+    static dropDown(Qid, Qtype, Qtext, Qoptions){
+        const card = document.createElement('form');
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
+
         this.createAndAppendQuest(Qtext, card);
 
         card.append(this.buildDropDown(Qid, Qoptions));
         return card;
     }
-    static openEnded(Qid, Qtext){
+    static openEnded(Qid, Qtype, Qtext){
         // const card = document.createElement('div');
         const card = document.createElement('form');
-
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
     
         this.createAndAppendQuest(Qtext, card);
         let input = document.createElement('textarea');
@@ -167,8 +190,11 @@ class Question{
 
         return card;
     }
-    static ranking(Qid, Qtext, Qoptions){
+    static ranking(Qid, Qtype, Qtext, Qoptions){
         const card = document.createElement('div');
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
+
         this.createAndAppendQuest(Qtext, card);
 
         //todo: add the ranking part;
@@ -195,16 +221,22 @@ class Question{
         container.append(sourceDiv);
 
     }
-    static imageChoice(Qid, Qtext, Qoptions){
-        const card = document.createElement('div');
+    static imageChoice(Qid, Qtype, Qtext, Qoptions){
+        const card = document.createElement('form');
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
+
         this.createAndAppendQuest(Qtext, card);
 
         //todo: add the Options  building for photos;
 
         return card;
     }
-    static slider(Qid, Qtext){
-        const card = document.createElement('div');
+    static slider(Qid, Qtype, Qtext){
+        const card = document.createElement('form');
+        card.dataset.questionId = Qid;
+        card.dataset.questionTypeId = Qtype;
+        
         this.createAndAppendQuest(Qtext, card);
         
         card.appendChild(this.createSlider());
@@ -214,7 +246,7 @@ class Question{
     
     static createAndAppendQuest(Qtext, container){
         const text = document.createElement('label');
-        
+
         text.innerText = Qtext;
         container.append(text);
         container.append(document.createElement('br'));
@@ -222,7 +254,7 @@ class Question{
     static createAndAppendInput(type, name, label, container){
         let option = document.createElement('input');
         option.type = type;
-        option.name = name;
+        option.name = "answer";
         option.id = name+label;
         option.value = label;
         let labelTag = document.createElement('label');
@@ -246,6 +278,7 @@ class Question{
         //const sliderDiv = document.createElement('div');
         const rangeInput = document.createElement('input');
         rangeInput.type="range";
+        rangeInput.name="answer";
         rangeInput.min="1";
         rangeInput.max="100";
         rangeInput.value = "50";
@@ -257,7 +290,7 @@ class Question{
 
     static buildDropDown(Qid, Qoptions){
         const selectEL = document.createElement('select');
-        selectEL.name = Qid;
+        selectEL.name = "answer";
         selectEL.id = Qid;
         
         for(let option of Qoptions.split(', ')){
@@ -273,5 +306,19 @@ class Question{
         // nextButton.setAttribute('disabled', 'true');
         nextButton.textContent = text;
         parentNode.appendChild(nextButton);
+    }
+
+    static answered(container){
+        if(container.matches('div')){
+            return true;
+        }else if(container.matches('form')){
+            
+            if(container.answer && container.answer.value){
+                return true;
+            }else{
+                let arr = [...container.answer];
+                return arr.some(cb => cb.checked == true);
+            }
+        }
     }
 }
