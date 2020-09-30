@@ -1,12 +1,12 @@
 class Survey{
     static all = [];
     
-    constructor({id, title, surveyor, description, due_date}){
+    constructor({id, title, surveyor, description, due_date_formatted}){
         this.id = id;
         this.title = title;
         this.surveyor = surveyor;
         this.description = description;
-        this.due_date = due_date;
+        this.due_date = due_date_formatted;
 
         Survey.all.push(this);
     }
@@ -68,5 +68,13 @@ class Survey{
         surveyLi.dataset.id = survey.id; 
         surveyLi.classList.add('admin-survey-list');
         return surveyLi;
+    }
+
+    static thankYou(container){
+        container.innerHTML = "";
+        const text = document.createElement('h1');
+        text.textContent = 'Thank You'
+        text.classList.add('animate__animated', 'animate__jackInTheBox');
+        container.append(text);
     }
 }

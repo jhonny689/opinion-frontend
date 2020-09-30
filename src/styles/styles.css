@@ -61,11 +61,20 @@ div.nav-card{
     height: 200px;
     margin-top: 10px;
     margin-bottom: 5px;
-    background-color: white;
+    background-color: #0096c7;
+    color: white;
     box-shadow: 3px 3px 5px 6px #ccc;
     padding-left: 5px;
     padding-right: 5px;
+}
 
+.nav-card > h3 {
+    color: #023e8a;
+}
+
+li.admin-survey-list:hover {
+    color: #023e8a;
+    /* font-size: 120%; */
 }
 
 div h3{
@@ -140,4 +149,8 @@ div.rating label{
 .rating input[type="radio"]:checked ~ label
 {
     background: transparent;
+}
+
+tbody > tr:hover {
+    color: #0096c7;
 }

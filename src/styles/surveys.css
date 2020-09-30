@@ -13,12 +13,12 @@ div.question-card {
     margin-bottom: 50px;
 }
 
-.survey-container > h2 {
+.survey-container > h2, h1 {
     text-align: center;
     color: #023e8a;
 }
 
-.next-button {
+button.load-next {
     color: white;
     height: 25px;
     background-color: #0096c7;
@@ -26,6 +26,16 @@ div.question-card {
     align-self: flex-end;
     margin-top: 30px;
     margin-right: 20px;
+    border: 0.5px solid #023e8a;
+    border-radius: 5px;
+}
+
+button.btn_cancel, button.btn_submit {
+    color: white;
+    height: 32px;
+    width: 100px;
+    margin: 15px;
+    background-color: #0096c7;
     border: 0.5px solid #023e8a;
     border-radius: 5px;
 }
@@ -42,23 +52,7 @@ div.question-card input.slider {
     margin-top: 15px;
 }
 
-
-
-/* 
-
-JS to animate question Cards
-
- --> add 'animate__flip' to question cards' classList
-
-document.addEventListener('click', (e) => {
-    console.log(e.target)
-    if (e.target.matches(".next-button")){
-        e.target.parentElement.classList.add('animate__flip')
-        e.target.disabled = true;
-        e.target.parentElement.innerHTML = "";
-    }
-}) 
-
-document.querySelector('.next-button').removeAttribute('disabled')
-
-*/
+:root {
+    --animate-duration: 400ms;
+    --animate-delay: 0.25s;
+  }

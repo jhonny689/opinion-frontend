@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', e => {
-    // const loggedInUser = "surveyee";
-    const loggedInUser = "admin";
+    const loggedInUser = "surveyee";
+    // const loggedInUser = "admin";
     const loginPage = document.getElementById('login-container');
     const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
@@ -57,12 +57,13 @@ function setClickListener(surveysTable, survey){
                 },  800);
             }
         }else if(e.target.matches('.btn_submit')){
+            const contentCard = e.target.parentElement;
+            Survey.thankYou(contentCard);
             Answer.submitAnswerSheet();
         }else if(e.target.matches('.btn_cancel')){
-            alert("weirrd behavior")
-            console.log("inside cancel button functionality");
             Answer.resetAnswerSheet();
             Question.fillContainer(survey,0);
+            i = 0;
         }
     })
 }

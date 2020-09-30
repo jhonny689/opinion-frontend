@@ -43,7 +43,7 @@
     position:relative;
   }
   .ui-droppable-active{
-    border-color:#bbb;
+    border-color:#0096c7;
   }
   .ui-droppable-hover{
     background:#0096c7;

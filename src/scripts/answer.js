@@ -59,6 +59,6 @@ class Answer{
     }
     
     static resetAnswerSheet(){
-        this.answersheet = [];
+        this.answersheet.answers = [];
     }
 }
