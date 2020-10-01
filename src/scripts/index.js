@@ -133,12 +133,14 @@ function setupAdminClicksListener(container, contentContainer){
         }else if(e.target.matches('div#drafts li')){
             const clickedSurvey = e.target
             Survey.loadSurveyDraft(clickedSurvey, contentContainer);
+            console.log("clicked a draft survey");
+            //Survey.loadSurveyForUpdate(surveyId, contentContainer);
         }else if(e.target.matches('div#published li')){
             console.log("clicked a published survey");
-            //Analysis.loadAnalysis(surveyId,contentContainer);
+            let surveyId = e.target.dataset.id;
+            Analytics.loadAnalysis(surveyId,contentContainer);
         }else if(e.target.matches('div#closed li')){
             console.log("clicked a closed survey");
-            //Survey.loadSurveyForUpdate(surveyId, contentContainer);
         }
     })
 }
