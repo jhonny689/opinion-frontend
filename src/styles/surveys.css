@@ -13,6 +13,23 @@ div.question-card {
     margin-bottom: 50px;
 }
 
+div.chart-card {
+    width: 300px;
+    border: 0.5px solid #023e8a;
+    margin: auto;
+    padding: 30px;
+    min-height: 250px;
+    box-shadow: 5px 10px 6px 3px #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    
+}
+
 .survey-container > h2, h1 {
     text-align: center;
     color: #023e8a;
