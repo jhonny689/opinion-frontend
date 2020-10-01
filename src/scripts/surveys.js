@@ -132,4 +132,15 @@ class Survey{
         container.append(message);
         message.classList.add('animate__animated', 'animate__jackInTheBox');
     }
+
+    static publishSurvey(surveyId, container) {
+        let obj = {};
+        obj['status'] = "published";
+        const surveyPatchPromise = dbConnect(getURL(`surveys/${surveyId}`), buildOptions("PATCH", obj));
+        surveyPatchPromise.then((data) => {
+            setupAdminPage();
+            Survey.appendSurveyStatus('Survey Published', container)    
+        })
+        
+    }
 }

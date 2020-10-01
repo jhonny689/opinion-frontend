@@ -2,13 +2,14 @@ document.addEventListener('DOMContentLoaded', e => {
     // const loggedInUser = "surveyee";
     const loggedInUser = "admin";
     const loginPage = document.getElementById('login-container');
-    const adminPage = document.getElementById('admin-container');
+    // const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
-    const surveyContainer = document.getElementById('survey-container');
+    // const surveyContainer = document.getElementById('survey-container');
     
     // adminPage.style.display='none';
     if (loggedInUser === "admin"){
-        setupAdminPage(adminPage, surveyContainer);
+        // setupAdminPage(adminPage, surveyContainer);
+        setupAdminPage();
     }else if(loggedInUser === "surveyee"){
         setupUserPage(userPage, surveyContainer);
     }else if(loggedInUser === "guest"){
@@ -107,7 +108,11 @@ function setSurveysList(surveysTable){
     });
 }
 
-function setupAdminPage(adminContainer, contentContainer){
+// function setupAdminPage(adminContainer, contentContainer){
+function setupAdminPage() {
+    const contentContainer = document.getElementById('survey-container');
+    contentContainer.innerHTML = "";
+    const adminContainer = document.getElementById('admin-container');
     const draftSurvey = document.querySelector('div#drafts');
     const publishedSurvey = document.querySelector('div#published');
     const closedSurvey = document.querySelector('div#closed');
@@ -156,7 +161,8 @@ function setupSurveyClicksListener(container){
         }else if (e.target.matches('.Save')) {
             Survey.appendSurveyStatus('Survey Saved', container)
         }else if (e.target.matches('.Publish')) {
-            Survey.appendSurveyStatus('Survey Published', container)
+            const surveyId = e.target.dataset.surveyId;
+            Survey.publishSurvey(surveyId, container);
         }
     })
 }
@@ -344,6 +350,9 @@ function getQuestTypeDropDown(){
 }
 
 function renderDrafts(container){
+    if (container.querySelector('ul')){
+        container.querySelector('ul').remove();
+    }
     const surveyPromise = dbConnect(getURL('users/3?surveys=draft'));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['survey_drafts'], container);
@@ -351,6 +360,9 @@ function renderDrafts(container){
 }
 
 function renderPublished(container){
+    if (container.querySelector('ul')){
+        container.querySelector('ul').remove();
+    }
     const surveyPromise = dbConnect(getURL('users/3?surveys=published'));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['published_surveys'], container);
@@ -358,6 +370,9 @@ function renderPublished(container){
 }
 
 function renderClosed(container){
+    if (container.querySelector('ul')){
+        container.querySelector('ul').remove();
+    }
     const surveyPromise = dbConnect(getURL('users/3?surveys=closed'));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['closed_surveys'], container);
