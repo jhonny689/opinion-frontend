@@ -101,8 +101,8 @@ class Analytics{
             let borderColor = generateColorArray(colors, labels.length);
             let ctx = document.getElementById(`myChart${d.question_type}`).getContext('2d');
             console.log('right before creating the chart', d);
-            if (d.question_type == 8)
-                debugger;
+            // if (d.question_type == 8)
+                // debugger;
             let chart = createChart(ctx, types[chartType[i]], generateChartData(labels, d.label, values, bgColor,borderColor), generaterChartOptions());
             console.log('right after creating the chart');
             i++;
@@ -140,7 +140,6 @@ class Analytics{
                 break;
             case 8:
                 answers = this.rankingCount(quest);
-                debugger;
                 break;
             default:
                 answers = this.numericalCount(quest);

@@ -84,7 +84,8 @@ function tableRowClickListener(clickedRow, surveyContainer){
 
 function setVisibility(container, survey){
     container.style.display='block';
-    survey.style.display='block';
+    if(survey)
+        survey.style.display='block';
 }
 
 function setCategories(categoryDD){
@@ -132,12 +133,18 @@ function setupAdminClicksListener(container, contentContainer){
             renderNewSurveyForm(contentContainer);
         }else if(e.target.matches('div#drafts li')){
             const clickedSurvey = e.target
+            const analyticsContainer = document.querySelector('div#data-analytics');
+            analyticsContainer.style.display = 'none';
+            setVisibility(contentContainer);
             Survey.loadSurveyDraft(clickedSurvey, contentContainer);
             console.log("clicked a draft survey");
             //Survey.loadSurveyForUpdate(surveyId, contentContainer);
         }else if(e.target.matches('div#published li')){
             console.log("clicked a published survey");
             let surveyId = e.target.dataset.id;
+            const analyticsContainer = document.querySelector('div#data-analytics');
+            contentContainer.style.display = 'none';
+            setVisibility(analyticsContainer);
             Analytics.loadAnalysis(surveyId,contentContainer);
         }else if(e.target.matches('div#closed li')){
             console.log("clicked a closed survey");
@@ -521,6 +528,7 @@ function setFilterEventListener(container) {
             e.preventDefault();
             filterForm.surveyor.selectedIndex = 0;
             filterForm.category.selectedIndex = 0;
+            surveyTableBody.innerHTML = '';
             Survey.render(surveyTableBody);
         }
     });
