@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', e => {
-    // const loggedInUser = "surveyee";
-    const loggedInUser = "admin";
+    const loggedInUser = "surveyee";
+    // const loggedInUser = "admin";
     const loginPage = document.getElementById('login-container');
     const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
@@ -29,6 +29,7 @@ function setupUserPage(container, survey){
     setSurveyors(surveyorDD);
     setSurveysList(surveysTable);
     setClickListener(surveysTable, survey);
+    setFilterEventListener(surveysTable);
 }
 
 function setClickListener(surveysTable, survey){
@@ -134,5 +135,60 @@ function renderClosed(container){
     const surveyPromise = dbConnect(getURL('users/1?surveys=closed'));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['closed_surveys'], container);
+    });
+}
+
+function setFilterEventListener(container) {
+    const surveyTableBody = container.querySelector('tbody');
+    const filterForm = document.querySelector('#lookup-form');
+    
+    filterForm.addEventListener('input', e => {
+        let currentSurveyCollection = Survey.all;
+        let filteredCollection = [];
+        
+        currentSurveyCollection.forEach(function(survey) {
+            if (survey.title.toLowerCase().includes(filterForm.title.value.toString())){
+                filteredCollection.push(survey);
+            }
+        });
+
+        surveyTableBody.innerHTML = '';
+        Survey.render(surveyTableBody, filteredCollection);
+    });
+
+    filterForm.addEventListener('change', e => {
+        filterForm.title.value = '';
+        if(e.target.matches('#category')){
+            filterForm.surveyor.selectedIndex = 0;
+            
+            let filteredByCategory = [];
+            Survey.all.forEach(function(survey){
+                if (survey.survey_category_id == e.target.value) {
+                    filteredByCategory.push(survey)
+                }
+            });
+            surveyTableBody.innerHTML = '';
+            Survey.render(surveyTableBody, filteredByCategory);
+        }else if (e.target.matches('#surveyor')){
+            filterForm.category.selectedIndex = 0;
+            
+            let filteredBySurveyor = [];
+            Survey.all.forEach(function(survey){
+                if (survey.surveyor === e.target.options[e.target.selectedIndex].text) {
+                    filteredBySurveyor.push(survey)
+                }
+            });
+            surveyTableBody.innerHTML = '';
+            Survey.render(surveyTableBody, filteredBySurveyor);
+        }
+    });    
+
+    filterForm.addEventListener('click', e => {
+        if (e.target.matches('#btn-reset')){
+            e.preventDefault();
+            filterForm.surveyor.selectedIndex = 0;
+            filterForm.category.selectedIndex = 0;
+            Survey.render(surveyTableBody);
+        }
     });
 }

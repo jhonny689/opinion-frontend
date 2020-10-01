@@ -20,7 +20,7 @@ class Category{
 
     static render(container){
         console.log("rendering ",this.all, " in ", container);
-        
+
         for(let cat of this.all){
             console.log("cat ", cat)
             container.append(cat.render_me())
