@@ -123,6 +123,14 @@ function setupAdminClicksListener(container, contentContainer){
     container.addEventListener('click', e => {
         if (e.target.matches('.new-survey-btn')){
             renderNewSurveyForm(contentContainer);
+        }else if(e.target.matches('div#drafts li')){
+            console.log("clicked a draft survey");
+        }else if(e.target.matches('div#published li')){
+            console.log("clicked a published survey");
+            //Analysis.loadAnalysis(surveyId,contentContainer);
+        }else if(e.target.matches('div#closed li')){
+            console.log("clicked a closed survey");
+            //Survey.loadSurveyForUpdate(surveyId, contentContainer);
         }
     })
 }

@@ -67,3 +67,9 @@ function createChart(ctx, type, data, options){
         options: options
     });
 }
+
+class Analysis{
+    static loadAnalysis(surveyId,contentContainer){
+        
+    }
+}
