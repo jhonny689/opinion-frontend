@@ -41,7 +41,7 @@ function setClickListener(surveysTable, survey){
     });
     let i = 0;
     survey.addEventListener('click', e => {
-        //debugger;
+
         if(e.target.matches('.load-next')){
             if(Question.answered(e.target.previousSibling)){
                 console.log("you have clicked:",e.target," and you got to calling prepare Answer sheet");
@@ -127,19 +127,50 @@ function setupAdminClicksListener(container, contentContainer){
 function setupSurveyClicksListener(container){
     container.addEventListener('click', e => {
         if(e.target.matches('.new-question-btn')){
+
             showNewQuestForm(e, container);
         }else if(e.target.matches('.submit-btn')){
+
             createQuestion(e.target.closest('div#form-box'));
+        }else if(e.target.matches('.submit-survey-btn')){
+
+            Survey.submit(prepSurvey(3, "draft", container));
+            container.innerHTML="";
+        }else if(e.target.matches('.publish-survey-btn')){
+
+            Survey.submit(prepSurvey(3, "published", container));
+            container.innerHTML="";
         }
     })
 }
 
+function prepSurvey(userId, status, container){
+    const title = container.querySelector('h1').textContent;
+    const description = container.querySelector('h3').textContent;
+    const date = container.querySelector('#due-date-input').value;
+    const survey_category = container.querySelector('#survey-category').value;
+    const questions = [...Question.surveyTemp];
+    questions.forEach(question => {
+        delete question.htmlEL;
+        delete question.answered;
+    });
+
+    return {
+        title: title,
+        description: description,
+        due_date: date,
+        status: status,
+        user_id: userId,
+        survey_category_id: survey_category,
+        questions: questions
+    }
+}
 function createQuestion(container){
     console.log(container);
     const qText = container.querySelector('#qtext').textContent;
     const qType = container.querySelector('#qType').value;
     const qOptions = container.querySelector('#qOptions').textContent;
-    
+
     let question = Question.prepareSurvey({question_type_id: parseInt(qType), question_text: qText, choices: qOptions}); 
     container.outerHTML = question.outerHTML;
 
@@ -154,19 +185,90 @@ function renderNewSurveyForm(container){
     headerTitle.onkeypress = (e) => {return (e.target.textContent.length <= 25)};
     headerTitle.textContent = "[Your Survey Title...]";
 
-    container.append(headerTitle);
+    container.appendChild(headerTitle);
+    console.log(container.innerHTML);
+
+    const surveyDesc = document.createElement('h3');
+    surveyDesc.contentEditable = true;
+    surveyDesc.classList.add('multi-line');
+    surveyDesc.classList.add('survey-description');
+    surveyDesc.onkeypress = (e) => {return (e.target.textContent.length <= 500)};
+    surveyDesc.textContent = "[Your Survey Description...]";
+
+    container.appendChild(surveyDesc);
+    console.log(container.innerHTML);
+
+    const surveyDueDateLabel = document.createElement('label');
+    surveyDueDateLabel.textContent = "Due Date :"
+    
+    const surveyDueDate = document.createElement('input')
+    surveyDueDate.type = 'date';
+    surveyDueDate.id = 'due-date-input';
+    surveyDueDate.minimum = new Date();
+
+    container.append(surveyDueDateLabel, surveyDueDate);
+    console.log(container.innerHTML);
+    
+    const surveyCategoryLabel = document.createElement('label');
+    surveyCategoryLabel.textContent = " Survey Category :"
+    
+    const surveyCategory = document.createElement('select')
+    surveyCategory.type = 'date';
+    surveyCategory.id = 'survey-category';
+    surveyCategory.innerHTML = `
+        <option value="0">Select Category</option>
+        <option value="1">Film/TV</option>
+        <option value="2">Music</option>
+        <option value="3">Celebrities</option>
+        <option value="4">Books</option>
+        <option value="5">Politics</option>
+    `;
+
+    container.append(surveyCategoryLabel, surveyCategory);
+    console.log(container.innerHTML);
 
     const addQuestBtn = document.createElement('div');
     addQuestBtn.textContent = "Add new Question";
     addQuestBtn.classList.add('btn');
     addQuestBtn.classList.add('new-question-btn');
+    container.appendChild(addQuestBtn);
+    console.log(container.innerHTML);
 
-    container.append(addQuestBtn);
+    const submitSurveyBtn = document.createElement('div');
+    submitSurveyBtn.textContent = "Save Survey";
+    submitSurveyBtn.classList.add('btn');
+    submitSurveyBtn.classList.add('submit-survey-btn');
+    container.appendChild(submitSurveyBtn);
+    
+    const publishSurveyBtn = document.createElement('div');
+    publishSurveyBtn.textContent = "Publish Survey";
+    publishSurveyBtn.classList.add('btn');
+    publishSurveyBtn.classList.add('publish-survey-btn');
+    container.appendChild(publishSurveyBtn);
+    console.log(container.innerHTML);
 }
 
 function showNewQuestForm(e, container){
     container.insertBefore(renderNewQuestForm(), e.target);
     setupTheDropDown();
+}
+
+function detectDDChange(qTypeDD){
+    console.dir(qTypeDD.value);
+    switch(qTypeDD.value){
+    case "1":
+    case "3":
+    case "6":
+    case "8":
+    case "9":
+        console.log("worked")
+        document.getElementById('optionsTR').className = "visible";
+        break;
+    default:
+        console.log("didn't work")
+        document.getElementById('optionsTR').className= "hidden";
+    }
+    
 }
 
 function renderNewQuestForm(){
@@ -185,10 +287,10 @@ function renderNewQuestForm(){
                 <td>:</td>
                 <td>${getQuestTypeDropDown()}</td>
             </tr>
-            <tr>
-                <td><label>Your Question</label></td>
+            <tr id='optionsTR' class='hidden'>
+                <td><label>Your Options</label></td>
                 <td>:</td>
-                <td><div contenteditable='true' id='qOptions' class='single-line text-box'><div></td>
+                <td><div contenteditable='true' id='qOptions' class='multi-line text-box'><div></td>
             </tr>
             <tr>
                 <td></td>
@@ -205,7 +307,7 @@ function getQuestTypeDropDown(){
     resDiv.classList.add('custom-select');
     resDiv.style="width:262px;";
     resDiv.innerHTML = `
-        <select id='qType'>
+        <select id='qType' onchange='detectDDChange(this)'>
             <option value='0'>Select Type:</option>
             <option value='1'>One Answer, Multiple Choices</option>
             <option value='2'>True Or False</option>
@@ -294,6 +396,7 @@ function setupTheDropDown(){
                     }
                 }
                 h.click();
+                s.dispatchEvent(new Event('change'));
             });
             b.appendChild(c);
         }

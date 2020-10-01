@@ -6,6 +6,8 @@ class Question{
         this.id = id;
         this.survey_id = survey_id;
         this.question_type_id = question_type_id;
+        this.question_text = question_text;
+        this.choices = choices;
         this.htmlEL = Question.buildHTML(id, question_type_id, question_text, choices);
         this.answered = false;
         

@@ -169,6 +169,11 @@ h1.survey-title {
     display: inline;
     white-space: nowrap;
 }
+
+[contenteditable = "true"].multi-line {
+    height: 60px;
+    overflow: scroll;
+}
 div.form-box{
     width: 85%;
     margin: auto;
@@ -183,4 +188,11 @@ div[contenteditable = "true"].text-box {
     /*border: 1px solid #000;*/
     border-style: inset;
     padding: 8px 0px 8px 0px;
+}
+
+tr.hidden{
+    display:none;
+}
+tr.visible{
+    display: table-row;
 }

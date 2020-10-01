@@ -69,4 +69,21 @@ class Survey{
         surveyLi.classList.add('admin-survey-list');
         return surveyLi;
     }
+
+    static submit(jsonSurvey){
+        let options = buildOptions('POST',jsonSurvey);
+        debugger;
+        dbConnect(getURL('surveys/'),options);
+    }
+
+    // static prepareJsonSurvey(title, description, date, status, userId){
+    //     return {
+    //         title: title,
+    //         description: description,
+    //         due_date: date,
+    //         status: status,
+    //         user_id: userId,
+    //         questions: Question.surveyTemp
+    //     }
+    // }
 }
