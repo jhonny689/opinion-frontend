@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', e => {
-    // const loggedInUser = "surveyee";
-    const loggedInUser = "admin";
+    const loggedInUser = "surveyee";
+    // const loggedInUser = "admin";
     const loginPage = document.getElementById('login-container');
     // const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
-    // const surveyContainer = document.getElementById('survey-container');
+    const surveyContainer = document.getElementById('survey-container');
     
     // adminPage.style.display='none';
     if (loggedInUser === "admin"){
@@ -45,6 +45,7 @@ function setClickListener(surveysTable, survey){
     let i = 0;
     survey.addEventListener('click', e => {
         if(e.target.matches('.load-next')){
+            console.log('You clicked NEXT');
             if(Question.answered(e.target.previousSibling)){
                 
                 Answer.prepareAnswerSheet(e.target.previousSibling)

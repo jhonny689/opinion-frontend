@@ -56,3 +56,8 @@ div.question-card input.slider {
     --animate-duration: 400ms;
     --animate-delay: 0.25s;
   }
+
+form.quest-form {
+    margin: auto;
+    min-height: 130px;
+}

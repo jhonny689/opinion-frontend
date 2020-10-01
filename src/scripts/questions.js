@@ -109,6 +109,7 @@ class Question{
     static qWSA(Qid, Qtype, Qtext, Qoptions){
         // const card = document.createElement('div');
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
 
@@ -124,6 +125,7 @@ class Question{
 
     static yesOrNo(Qid, Qtype, Qtext){
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
 
@@ -137,6 +139,7 @@ class Question{
 
     static qWMA(Qid, Qtype, Qtext, Qoptions){
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
 
@@ -151,6 +154,7 @@ class Question{
     }
     static ratingScale(Qid, Qtype, Qtext){
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
 
@@ -164,6 +168,7 @@ class Question{
     static likertScale(Qid, Qtext){
         const likert = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
 
         this.createAndAppendQuest(Qtext, card);
@@ -177,6 +182,7 @@ class Question{
 
     static dropDown(Qid, Qtype, Qtext, Qoptions){
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
 
@@ -189,6 +195,7 @@ class Question{
     static openEnded(Qid, Qtype, Qtext){
         // const card = document.createElement('div');
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
     
@@ -202,6 +209,7 @@ class Question{
 
     static ranking(Qid, Qtype, Qtext, Qoptions){
         const card = document.createElement('div');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
 
@@ -234,6 +242,7 @@ class Question{
 
     static imageChoice(Qid, Qtype, Qtext, Qoptions){
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
 
@@ -246,6 +255,7 @@ class Question{
 
     static slider(Qid, Qtype, Qtext){
         const card = document.createElement('form');
+        card.classList.add('quest-form');
         card.dataset.questionId = Qid;
         card.dataset.questionTypeId = Qtype;
         
@@ -336,7 +346,6 @@ class Question{
     }
 
     static renderDraftQuestions(dbQuestions, container, surveyId) {
-        console.log('draft Survey: ', dbQuestions)
         for (let question of dbQuestions) {
             container.append(this.prepareSurvey(question))
         }

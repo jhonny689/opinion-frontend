@@ -165,6 +165,9 @@ div.new-survey-btn,div.btn, div.draft-btn {
     padding: 10px;
     text-align: center;
     border: 1px solid #000;
+    background-color: #0096c7;
+    color: white;
+    border-radius: 10px;
 }
 
 h1.survey-title {
