@@ -79,14 +79,12 @@ class Question{
     static fillContainer(container, index = 0){
         if (index < this.all.length){
             console.log("fillContainer with index = ", index, "and type = ",this.all[index].question_type_id);
-            container.innerHTML="";
+
             container.appendChild(this.all[index].htmlEL);
             if(this.all[index].question_type_id === 8){
-                //debugger;
                 this.prototype.setupDragAndDrop();
             }
         }else{
-            container.innerHTML="";
             container.appendChild(Question.getLastQuestion());
         }
         

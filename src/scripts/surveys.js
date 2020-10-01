@@ -1,12 +1,13 @@
 class Survey{
     static all = [];
     
-    constructor({id, title, surveyor, description, due_date_formatted}){
+    constructor({id, title, surveyor, description, due_date_formatted, survey_category_id}){
         this.id = id;
         this.title = title;
         this.surveyor = surveyor;
         this.description = description;
         this.due_date = due_date_formatted;
+        this.survey_category_id = survey_category_id;
 
         Survey.all.push(this);
     }
@@ -25,10 +26,12 @@ class Survey{
         return tableRow;
     }
 
-    static render(container){
-        console.log("rendering ",this.all, " in ", container);
+    static render(container, surveyCollection){
+        //I added a 2nd parameter and the code below to be able to reuse this function.
+        //It shouldn't affect previous use of the function. -roy
+        let surveys = surveyCollection || this.all;
         
-        for(let survey of this.all){
+        for(let survey of surveys){
             container.append(survey.render_me())
         }
     }

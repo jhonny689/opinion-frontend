@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', e => {
-    // const loggedInUser = "surveyee";
-    const loggedInUser = "admin";
+    const loggedInUser = "surveyee";
+    // const loggedInUser = "admin";
     const loginPage = document.getElementById('login-container');
     const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
@@ -29,6 +29,7 @@ function setupUserPage(container, survey){
     setSurveyors(surveyorDD);
     setSurveysList(surveysTable);
     setClickListener(surveysTable, survey);
+    setFilterEventListener(surveysTable);
 }
 
 function setClickListener(surveysTable, survey){
@@ -36,21 +37,21 @@ function setClickListener(surveysTable, survey){
     surveysTable.addEventListener('click', e => {
         if(e.target.matches('td')){
             console.log("should be able to catch click in td")
+            survey.innerHTML = '';
             tableRowClickListener(e.target.parentNode, survey);
         }
     });
     let i = 0;
     survey.addEventListener('click', e => {
-
         if(e.target.matches('.load-next')){
             if(Question.answered(e.target.previousSibling)){
-                console.log("you have clicked:",e.target," and you got to calling prepare Answer sheet");
+                
                 Answer.prepareAnswerSheet(e.target.previousSibling)
                 e.target.parentElement.classList.add("animate__flip");
                 e.target.parentElement.style = "background-color:#fff";
-                console.log("you have clicked:",e.target," and you got to after prepare Answer sheet");
+                
                 let intervalID = setInterval(() => {
-                    console.log(i);
+                    e.target.parentElement.remove();
                     Question.fillContainer(survey, ++i);
                     e.target.parentElement.classList.remove("animate__flip");
                     clearInterval(intervalID);
@@ -447,4 +448,57 @@ function closeAllSelect(elmnt) {
         x[i].classList.add("select-hide");
       }
     }
+}
+function setFilterEventListener(container) {
+    const surveyTableBody = container.querySelector('tbody');
+    const filterForm = document.querySelector('#lookup-form');
+    filterForm.addEventListener('input', e => {
+        let currentSurveyCollection = Survey.all;
+        let filteredCollection = [];
+        
+        currentSurveyCollection.forEach(function(survey) {
+            if (survey.title.toLowerCase().includes(filterForm.title.value.toString())){
+                filteredCollection.push(survey);
+            }
+        });
+
+        surveyTableBody.innerHTML = '';
+        Survey.render(surveyTableBody, filteredCollection);
+    });
+
+    filterForm.addEventListener('change', e => {
+        filterForm.title.value = '';
+        if(e.target.matches('#category')){
+            filterForm.surveyor.selectedIndex = 0;
+            
+            let filteredByCategory = [];
+            Survey.all.forEach(function(survey){
+                if (survey.survey_category_id == e.target.value) {
+                    filteredByCategory.push(survey)
+                }
+            });
+            surveyTableBody.innerHTML = '';
+            Survey.render(surveyTableBody, filteredByCategory);
+        }else if (e.target.matches('#surveyor')){
+            filterForm.category.selectedIndex = 0;
+            
+            let filteredBySurveyor = [];
+            Survey.all.forEach(function(survey){
+                if (survey.surveyor === e.target.options[e.target.selectedIndex].text) {
+                    filteredBySurveyor.push(survey)
+                }
+            });
+            surveyTableBody.innerHTML = '';
+            Survey.render(surveyTableBody, filteredBySurveyor);
+        }
+    });    
+
+    filterForm.addEventListener('click', e => {
+        if (e.target.matches('#btn-reset')){
+            e.preventDefault();
+            filterForm.surveyor.selectedIndex = 0;
+            filterForm.category.selectedIndex = 0;
+            Survey.render(surveyTableBody);
+        }
+    });
 }
