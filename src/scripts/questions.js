@@ -334,4 +334,13 @@ class Question{
             }
         }
     }
+
+    static renderDraftQuestions(dbQuestions, container, surveyId) {
+        console.log('draft Survey: ', dbQuestions)
+        for (let question of dbQuestions) {
+            container.append(this.prepareSurvey(question))
+        }
+        Survey.addDraftButton('Save', container, surveyId);
+        Survey.addDraftButton('Publish', container, surveyId);
+    }
 }

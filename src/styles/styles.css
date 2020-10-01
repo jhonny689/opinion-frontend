@@ -157,7 +157,7 @@ div.rating label{
     background: transparent;
 }
 
-div.new-survey-btn,div.btn {
+div.new-survey-btn,div.btn, div.draft-btn {
     width: 90%;
     margin: auto;
     cursor: pointer;

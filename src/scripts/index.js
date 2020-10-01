@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', e => {
-    const loggedInUser = "surveyee";
-    // const loggedInUser = "admin";
+    // const loggedInUser = "surveyee";
+    const loggedInUser = "admin";
     const loginPage = document.getElementById('login-container');
     const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
@@ -125,7 +125,8 @@ function setupAdminClicksListener(container, contentContainer){
         if (e.target.matches('.new-survey-btn')){
             renderNewSurveyForm(contentContainer);
         }else if(e.target.matches('div#drafts li')){
-            console.log("clicked a draft survey");
+            const clickedSurvey = e.target
+            Survey.loadSurveyDraft(clickedSurvey, contentContainer);
         }else if(e.target.matches('div#published li')){
             console.log("clicked a published survey");
             //Analysis.loadAnalysis(surveyId,contentContainer);
@@ -152,6 +153,10 @@ function setupSurveyClicksListener(container){
 
             Survey.submit(prepSurvey(3, "published", container));
             container.innerHTML="";
+        }else if (e.target.matches('.Save')) {
+            Survey.appendSurveyStatus('Survey Saved', container)
+        }else if (e.target.matches('.Publish')) {
+            Survey.appendSurveyStatus('Survey Published', container)
         }
     })
 }
@@ -339,7 +344,7 @@ function getQuestTypeDropDown(){
 }
 
 function renderDrafts(container){
-    const surveyPromise = dbConnect(getURL('users/1?surveys=draft'));
+    const surveyPromise = dbConnect(getURL('users/3?surveys=draft'));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['survey_drafts'], container);
     });
@@ -353,7 +358,7 @@ function renderPublished(container){
 }
 
 function renderClosed(container){
-    const surveyPromise = dbConnect(getURL('users/1?surveys=closed'));
+    const surveyPromise = dbConnect(getURL('users/3?surveys=closed'));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['closed_surveys'], container);
     });

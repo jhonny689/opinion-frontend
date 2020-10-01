@@ -96,4 +96,40 @@ class Survey{
     //         questions: Question.surveyTemp
     //     }
     // }
+
+    static loadSurveyDraft(surveyLi, container) {
+        container.innerHTML = '';
+        const surveyTitle = document.createElement('h2');
+        surveyTitle.textContent = surveyLi.textContent;
+        const surveyId = surveyLi.dataset.id;
+        container.append(surveyTitle);
+
+        Survey.loadDraftQuestions(surveyId, container);
+    }
+
+    static loadDraftQuestions(surveyId, container) {
+        const questionsPromise = dbConnect(getURL(`questions?survey=${surveyId}`));
+        questionsPromise.then(dbQuestions => {
+            Question.renderDraftQuestions(dbQuestions, container, surveyId);
+        });
+    }
+
+    static addDraftButton(buttonText, container, surveyId) {
+        const newButton = document.createElement('div');
+        newButton.classList.add('draft-btn', buttonText);
+        newButton.textContent = buttonText;
+        newButton.dataset.surveyId = surveyId; 
+
+        container.append(newButton);
+    }
+
+    static appendSurveyStatus(text, container) {
+        container.innerHTML = '';
+        const message = document.createElement('h2');
+        message.textContent = text;
+        
+        
+        container.append(message);
+        message.classList.add('animate__animated', 'animate__jackInTheBox');
+    }
 }
