@@ -125,12 +125,13 @@ function setupAdminClicksListener(container, contentContainer){
             renderNewSurveyForm(contentContainer);
         }else if(e.target.matches('div#drafts li')){
             console.log("clicked a draft survey");
+            //Survey.loadSurveyForUpdate(surveyId, contentContainer);
         }else if(e.target.matches('div#published li')){
             console.log("clicked a published survey");
-            //Analysis.loadAnalysis(surveyId,contentContainer);
+            let surveyId = e.target.dataset.id;
+            Analytics.loadAnalysis(surveyId,contentContainer);
         }else if(e.target.matches('div#closed li')){
             console.log("clicked a closed survey");
-            //Survey.loadSurveyForUpdate(surveyId, contentContainer);
         }
     })
 }
