@@ -14,7 +14,7 @@ div.question-card {
 }
 
 div.chart-card {
-    width: 300px;
+    width: 500px;
     border: 0.5px solid #023e8a;
     margin: auto;
     padding: 30px;
@@ -28,6 +28,11 @@ div.chart-card {
     margin-bottom: 50px;
     margin-left: 50px;
     
+}
+
+canvas {
+    width: 500px;
+    height: 400px;
 }
 
 .survey-container > h2, h1 {

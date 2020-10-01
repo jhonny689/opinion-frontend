@@ -1,15 +1,3 @@
-document.addEventListener('DOMContentLoaded', e => {
-    
-})
-
-// document.addEventListener('DOMContentLoaded', e => {
-//     let data=[20, 10, 15, 35, 25, 20, 29, 32];
-//     let labels=["Option1", "Option2", "Option3", "Option4", "Option5","Option6","Option7","Option8"];
-//     let ctx = document.getElementById('myChart').getContext('2d');
-//     let bgColor = generateColorArray(colors, data.length);
-//     let borderColor = generateColorArray(colors, data.length);
-//     createChart(ctx, types.bar, generateChartData(labels, "Question", data, bgColor, borderColor), generaterChartOptions())
-// });
 function generateColorArray(colors, num){
     let colorArray = [];
     for(let i = 0; i < num; i++){
@@ -30,10 +18,28 @@ function generateChartData(labels, label, data, bgColor, borderColor){
         }]
     }
 }
-function generaterChartOptions(animation){
+function generaterChartOptions(animation, label){
     let options = {
         responsive: true,
         maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    autoSkip: false
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    autoSkip: false
+                }
+            }],
+        },
+        legend: {
+            display: false,
+        }
+    
     }
     if (animation)
         options.animation = animation;
@@ -78,7 +84,7 @@ class Analytics{
             line: "line",
             doughnut: "doughnut",
             pie: "pie",
-            scatter: "scatter",
+            scatter: "doughnut",
             polarArea: "polarArea",
             area: "line",
             mixed: "bar",
@@ -94,7 +100,9 @@ class Analytics{
             let bgColor = generateColorArray(colors, labels.length);
             let borderColor = generateColorArray(colors, labels.length);
             let ctx = document.getElementById(`myChart${d.question_type}`).getContext('2d');
-            console.log('right before creating the chart');
+            console.log('right before creating the chart', d);
+            if (d.question_type == 8)
+                debugger;
             let chart = createChart(ctx, types[chartType[i]], generateChartData(labels, d.label, values, bgColor,borderColor), generaterChartOptions());
             console.log('right after creating the chart');
             i++;
@@ -124,6 +132,7 @@ class Analytics{
             case 1:
             case 2:
             case 3:
+            case 5:
             case 6:
             case 7:
             case 9:
@@ -131,6 +140,7 @@ class Analytics{
                 break;
             case 8:
                 answers = this.rankingCount(quest);
+                debugger;
                 break;
             default:
                 answers = this.numericalCount(quest);
@@ -146,13 +156,25 @@ class Analytics{
     static nonNumericalCount(quest){
         const parser = {};
         const res = {};
-        if(quest.question_type == 3)
-            debugger;
-        for(let ans of quest){
-            if(parser[ans.value]){
-                parser[ans.value]++;
-            }else{
-                parser[ans.value] = 1;
+        if(quest[0].question_type == 3){
+            for(let ans of quest){
+                // let newVal = ans.value.slice(2,ans.value.length-2).split(`","`);
+                let newVal = JSON.parse(ans.value);
+                for(let answer of newVal){
+                    if(parser[answer]){
+                        parser[answer]++;
+                    }else{
+                        parser[answer] = 1;
+                    }
+                }
+            }
+        }else{
+            for(let ans of quest){
+                if(parser[ans.value]){
+                    parser[ans.value]++;
+                }else{
+                    parser[ans.value] = 1;
+                }
             }
         }
         res["labels"]= _.keys(parser);
