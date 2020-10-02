@@ -1,16 +1,10 @@
 document.addEventListener('DOMContentLoaded', e => {
-<<<<<<< HEAD
     LOGGED_IN_USER = null;
     //const loggedInUser = "surveyee";
     //const loggedInUser = "admin";
     LoadWebPage();
 });
 function LoadWebPage(){
-=======
-    // const loggedInUser = "surveyee";
-    const loggedInUser = "admin";
- 
->>>>>>> thurdayEveBranch
     const loginPage = document.getElementById('login-container');
     // const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
