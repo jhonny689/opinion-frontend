@@ -13,7 +13,7 @@ class Answer{
         console.clear();
         console.log("got answer form to prepare answer sheet", answerForm);
         let questionId = answerForm.dataset.questionId;
-        let userId = 3;
+        let userId = USER_ID;
         let input = this.grabAnswerValue(answerForm);
         this.answersheet.answers.push(new Answer({question_id: questionId, user_id: userId, value: input}));
     }
@@ -52,10 +52,14 @@ class Answer{
     }
 
     static submitAnswerSheet(){
+        const surveysTable = document.getElementById('surveys-table');
         console.dir(this.answersheet);
         let options = buildOptions('POST',this.answersheet);
-        debugger;
-        dbConnect(getURL('responses/'),options);
+        dbConnect(getURL('responses/'),options)
+        .then(json => {
+            surveysTable.querySelector('tbody').innerHTML='';
+            setSurveysList(surveysTable);
+        })
     }
     
     static resetAnswerSheet(){
