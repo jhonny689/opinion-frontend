@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', e => {
     LOGGED_IN_USER = null;
+    USER_ID = null;
     // LOGGED_IN_USER = "admin";
     // USER_ID = 3;
 
@@ -37,27 +38,34 @@ function setUpPwdInputListners(){
 }
 
 function setUpLoginClickListners(loginPage){
+    const username = loginPage.querySelector('div#username');
+    const password = loginPage.querySelector('div#password');
     loginPage.addEventListener('click', e => {
         if(e.target.matches('.cancel-btn')){
-            let username = loginPage.querySelector('div#username').textContent;
-            let password = loginPage.querySelector('div#password').textContent;
+            username.textContent = '';
+            password.textContent = '';
+        }else if(e.target.matches('.login-btn')){
+            console.log('clicked Login...');
             let authentication = {
-                username: username,
-                password: password
+                username: username.textContent,
+                password: password.textContent,
             };
             let options = buildOptions('POST', authentication);
             let connection = dbConnect(getURL('authentications/'),options);
             connection.then(user => setLoggedInUser(user));
-        }else if(e.target.matches('.login-btn')){
-            console.log('clicked Login...');
         }
+    })
+    const logoutBtn = document.querySelector('button.log-out');
+    logoutBtn.addEventListener('click', e => {
+        LOGGED_IN_USER = null;
+        USER_ID = null;
+        LoadWebPage();
     })
 }
 
 function setLoggedInUser(user){
     LOGGED_IN_USER = user[0].user.role;
     USER_ID = user[0].user_id;
-    debugger
     LoadWebPage();
 }
 
@@ -90,7 +98,6 @@ function setClickListener(surveysTable, survey){
         if(e.target.matches('.load-next')){
             console.log('You clicked NEXT');
             if(Question.answered(e.target.previousSibling)){
-                
                 Answer.prepareAnswerSheet(e.target.previousSibling)
                 e.target.parentElement.classList.add("animate__flip");
                 e.target.parentElement.style = "background-color:#fff";
@@ -147,9 +154,13 @@ function setSurveysList(surveysTable){
     
     surveysPromise.then(dbSurveys => {
         Survey.createAll(dbSurveys, surveysTableBody);
-        $('#surveys-table').DataTable({
-            searching: false,
-        });
+        if ( $.fn.dataTable.isDataTable( '#surveys-table' ) ) {
+            table = $('#surveys-table').DataTable();
+        }else{
+            $('#surveys-table').DataTable({
+                searching: false,
+            });
+        }
     });
 }
 
