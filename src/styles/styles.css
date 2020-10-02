@@ -87,7 +87,7 @@ div h3{
     text-align: center;
 }
 
-div.survey-container, div#data-analytics {
+div.survey-container, div#login-container, div#data-analytics {
     min-height: 400px;
     width: 95%;
     margin: auto;

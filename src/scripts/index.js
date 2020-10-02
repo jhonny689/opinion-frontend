@@ -1,30 +1,72 @@
 document.addEventListener('DOMContentLoaded', e => {
-    const loggedInUser = "surveyee";
-    // const loggedInUser = "admin";
+    LOGGED_IN_USER = null;
+    //const loggedInUser = "surveyee";
+    //const loggedInUser = "admin";
+    LoadWebPage();
+});
+function LoadWebPage(){
     const loginPage = document.getElementById('login-container');
     // const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
     const surveyContainer = document.getElementById('survey-container');
-    
-    // adminPage.style.display='none';
-    if (loggedInUser === "admin"){
+
+    if(!LOGGED_IN_USER){
+        setupLoginPage(loginPage);
+    }else if (LOGGED_IN_USER === "admin"){
         // setupAdminPage(adminPage, surveyContainer);
         setupAdminPage();
-    }else if(loggedInUser === "surveyee"){
+    }else if(LOGGED_IN_USER === "surveyee"){
         setupUserPage(userPage, surveyContainer);
-    }else if(loggedInUser === "guest"){
+    }else if(LOGGED_IN_USER === "guest"){
         setupGuestPage(surveyContainer);
-    }else{
-        setupLoginPage(loginPage);
     }
-});
+}
 
+function setupLoginPage(loginPage){
+    setVisibility(loginPage);
+    setUpPwdInputListners();
+    setUpLoginClickListners(loginPage);
+}
+
+function setUpPwdInputListners(){
+    const pwd = document.querySelector('div#password');
+    pwd.addEventListener('keydown', e => {
+        console.log("*");
+    })
+}
+
+function setUpLoginClickListners(loginPage){
+    loginPage.addEventListener('click', e => {
+        if(e.target.matches('.cancel-btn')){
+            let username = loginPage.querySelector('div#username').textContent;
+            let password = loginPage.querySelector('div#password').textContent;
+            let authentication = {
+                username: username,
+                password: password
+            };
+            let options = buildOptions('POST', authentication);
+            let connection = dbConnect(getURL('authentications/'),options);
+            connection.then(user => setLoggedInUser(user));
+        }else if(e.target.matches('.login-btn')){
+            console.log('clicked Login...');
+        }
+    })
+}
+
+function setLoggedInUser(user){
+    LOGGED_IN_USER = user[0].user.role;
+    USER_ID = user[0].user_id;
+    debugger
+    LoadWebPage();
+}
 
 function setupUserPage(container, survey){
     const categoryDD = document.querySelector('select#category');
     const surveyorDD = document.querySelector('select#surveyor');
     const surveysTable = document.getElementById('surveys-table');
+    const loginPage = document.getElementById('login-container');
 
+    loginPage.style.display = 'none';
     setVisibility(container, survey);
     setCategories(categoryDD);
     setSurveyors(surveyorDD);
@@ -99,7 +141,7 @@ function setSurveyors(surveyorDD){
 }
 
 function setSurveysList(surveysTable){
-    const surveysPromise = dbConnect(getURL('surveys?status=published'));
+    const surveysPromise = dbConnect(getURL(`surveys?status=published&user=${USER_ID}`));
     const surveysTableBody = surveysTable.querySelector('tbody');
     
     surveysPromise.then(dbSurveys => {
@@ -118,7 +160,9 @@ function setupAdminPage() {
     const draftSurvey = document.querySelector('div#drafts');
     const publishedSurvey = document.querySelector('div#published');
     const closedSurvey = document.querySelector('div#closed');
+    const loginPage = document.getElementById('login-container');
 
+    loginPage.style.display = 'none';
     setVisibility(adminContainer, contentContainer);
     renderDrafts(draftSurvey);
     renderPublished(publishedSurvey);
@@ -130,6 +174,8 @@ function setupAdminPage() {
 function setupAdminClicksListener(container, contentContainer){
     container.addEventListener('click', e => {
         if (e.target.matches('.new-survey-btn')){
+            contentContainer.style.display = 'block';
+            document.getElementById('data-analytics').style.display = 'none';
             renderNewSurveyForm(contentContainer);
         }else if(e.target.matches('div#drafts li')){
             const clickedSurvey = e.target
@@ -162,11 +208,11 @@ function setupSurveyClicksListener(container){
             createQuestion(e.target.closest('div#form-box'));
         }else if(e.target.matches('.submit-survey-btn')){
 
-            Survey.submit(prepSurvey(3, "draft", container));
+            Survey.submit(prepSurvey(USER_ID, "draft", container));
             container.innerHTML="";
         }else if(e.target.matches('.publish-survey-btn')){
 
-            Survey.submit(prepSurvey(3, "published", container));
+            Survey.submit(prepSurvey(USER_ID, "published", container));
             container.innerHTML="";
         }else if (e.target.matches('.Save')) {
             Survey.appendSurveyStatus('Survey Saved', container)
@@ -363,7 +409,7 @@ function renderDrafts(container){
     if (container.querySelector('ul')){
         container.querySelector('ul').remove();
     }
-    const surveyPromise = dbConnect(getURL('users/3?surveys=draft'));
+    const surveyPromise = dbConnect(getURL(`users/${USER_ID}?surveys=draft`));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['survey_drafts'], container);
     });
@@ -373,7 +419,7 @@ function renderPublished(container){
     if (container.querySelector('ul')){
         container.querySelector('ul').remove();
     }
-    const surveyPromise = dbConnect(getURL('users/3?surveys=published'));
+    const surveyPromise = dbConnect(getURL(`users/${USER_ID}?surveys=published`));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['published_surveys'], container);
     });
@@ -383,7 +429,7 @@ function renderClosed(container){
     if (container.querySelector('ul')){
         container.querySelector('ul').remove();
     }
-    const surveyPromise = dbConnect(getURL('users/3?surveys=closed'));
+    const surveyPromise = dbConnect(getURL(`users/${USER_ID}?surveys=closed`));
     surveyPromise.then(adminSurveys => {
         Survey.renderAdminSurveys(adminSurveys['closed_surveys'], container);
     });
