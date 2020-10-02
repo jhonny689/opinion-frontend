@@ -347,9 +347,16 @@ class Question{
 
     static renderDraftQuestions(dbQuestions, container, surveyId) {
         for (let question of dbQuestions) {
-            container.append(this.prepareSurvey(question))
+            container.append(this.prepareDraftQuestion(question));
+            document.querySelector('button.load-next').remove();
+            // container.append(this.prepareSurvey(question))
         }
         Survey.addDraftButton('Save', container, surveyId);
         Survey.addDraftButton('Publish', container, surveyId);
+    }
+
+    static prepareDraftQuestion(jsonQuestion) {
+        let newQuest = new Question(jsonQuestion);
+        return newQuest.htmlEL;
     }
 }

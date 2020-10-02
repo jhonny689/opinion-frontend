@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', e => {
     LOGGED_IN_USER = null;
-    //const loggedInUser = "surveyee";
-    //const loggedInUser = "admin";
+    // LOGGED_IN_USER = "admin";
+    // USER_ID = 3;
+
     LoadWebPage();
 });
 function LoadWebPage(){

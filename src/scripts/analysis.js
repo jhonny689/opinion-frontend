@@ -123,10 +123,7 @@ class Analytics{
     }
 
     static setupQuestAnalysis(quest, object){
-<<<<<<< HEAD
-=======
         // debugger;
->>>>>>> thurdayEveBranch
         let question_type = quest[0]["question_type"];
         let label = quest[0]["question_text"];
         let question_type_id = quest[0]["question_type"];
