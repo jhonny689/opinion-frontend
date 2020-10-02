@@ -102,7 +102,8 @@ class Analytics{
             let ctx = canvas.getContext('2d');
             let questText = document.createElement('p');
             questText.textContent = d.label;
-            canvas.parentElement.append(questText);
+            if(!canvas.parentElement.querySelector('p'))
+                canvas.parentElement.append(questText);
             console.log('right before creating the chart', d);
             let chart = createChart(ctx, types[chartType[i]], generateChartData(labels, d.label, values, bgColor,borderColor), generaterChartOptions());
             console.log('right after creating the chart');
