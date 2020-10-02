@@ -9,7 +9,10 @@
   }
   
   .select-selected {
-    background-color: SteelBlue;
+    background-color: #0096c7;
+    border: 0.5px solid black;
+    color: black;
+    padding: 8px 16px;
   }
   
   /* Style the arrow inside the select element: */
@@ -31,8 +34,9 @@
   }
   
   /* style the items (options), including the selected item: */
-  .select-items div,.select-selected {
-    color: #ffffff;
+  .select-items div {
+    background-color: white;
+    color: black;
     padding: 8px 16px;
     border: 1px solid transparent;
     border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
@@ -42,7 +46,7 @@
   /* Style items (options): */
   .select-items {
     position: absolute;
-    background-color: DodgerBlue;
+    background-color: #0096c7;
     top: 100%;
     left: 0;
     right: 0;
@@ -56,4 +60,9 @@
   
   .select-items div:hover, .same-as-selected {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  div.date-category {
+      text-align: center;
+      margin-bottom: 10px;
   }

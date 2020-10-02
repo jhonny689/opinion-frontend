@@ -263,7 +263,7 @@ function renderNewSurveyForm(container){
     headerTitle.classList.add('single-line');
     headerTitle.classList.add('survey-title');
     headerTitle.onkeypress = (e) => {return (e.target.textContent.length <= 25)};
-    headerTitle.textContent = "[Your Survey Title...]";
+    headerTitle.textContent = "Your Survey Title...";
 
     container.appendChild(headerTitle);
     console.log(container.innerHTML);
@@ -273,12 +273,16 @@ function renderNewSurveyForm(container){
     surveyDesc.classList.add('multi-line');
     surveyDesc.classList.add('survey-description');
     surveyDesc.onkeypress = (e) => {return (e.target.textContent.length <= 500)};
-    surveyDesc.textContent = "[Your Survey Description...]";
+    surveyDesc.textContent = "Your Survey Description...";
 
     container.appendChild(surveyDesc);
     console.log(container.innerHTML);
 
+    const lineBreak = document.createElement('hr');
+    container.appendChild(lineBreak);
+
     const surveyDueDateLabel = document.createElement('label');
+    // surveyDueDateLabel.classList.add('label-due-date');
     surveyDueDateLabel.textContent = "Due Date :"
     
     const surveyDueDate = document.createElement('input')
@@ -286,7 +290,10 @@ function renderNewSurveyForm(container){
     surveyDueDate.id = 'due-date-input';
     surveyDueDate.minimum = new Date();
 
-    container.append(surveyDueDateLabel, surveyDueDate);
+    // container.append(surveyDueDateLabel, surveyDueDate);
+    const dateAndCatDiv = document.createElement('div');
+    dateAndCatDiv.classList.add('date-category');
+    dateAndCatDiv.append(surveyDueDateLabel, surveyDueDate);
     console.log(container.innerHTML);
     
     const surveyCategoryLabel = document.createElement('label');
@@ -304,7 +311,9 @@ function renderNewSurveyForm(container){
         <option value="5">Politics</option>
     `;
 
-    container.append(surveyCategoryLabel, surveyCategory);
+    // container.append(surveyCategoryLabel, surveyCategory);
+    dateAndCatDiv.append(surveyCategoryLabel, surveyCategory);
+    container.append(dateAndCatDiv);
     console.log(container.innerHTML);
 
     const addQuestBtn = document.createElement('div');
@@ -360,22 +369,23 @@ function renderNewQuestForm(){
             <tr>
                 <td><label>Your Question</label></td>
                 <td>:</td>
-                <td><div contenteditable='true' id='qtext' class='single-line text-box'><div></td>
+                <td colspan="2"><div contenteditable='true' id='qtext' class='single-line text-box'><div></td>
             </tr>
             <tr>
                 <td><label>Your Question Type</label></td>
                 <td>:</td>
-                <td>${getQuestTypeDropDown()}</td>
+                <td colspan="2">${getQuestTypeDropDown()}</td>
             </tr>
             <tr id='optionsTR' class='hidden'>
                 <td><label>Your Options</label></td>
                 <td>:</td>
-                <td><div contenteditable='true' id='qOptions' class='multi-line text-box'><div></td>
+                <td colspan="2"><div contenteditable='true' id='qOptions' class='multi-line text-box'><div></td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td><div class="cancel-btn" id="cancel-btn" style="display:'inline';">Cancel</div><div class="submit-btn" id="submit-btn">Submit</div></td>
+                <td align="right"><div class="cancel-btn" id="cancel-btn" style="display:'inline';">Cancel</div></td>
+                <td align="center"><div class="submit-btn" id="submit-btn">Submit</div></td>
             </tr>
         </table>
     `

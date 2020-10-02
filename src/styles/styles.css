@@ -195,10 +195,11 @@ h1.survey-title {
 div.form-box{
     width: 85%;
     margin: auto;
-    /*border: 1px solid grey;*/
+    border: 1px solid grey;
     border-style: inset;
     padding: 10px;
-    box-shadow: -5px -5px 10px grey inset;
+    box-shadow: 3px 3px 6px 3px #ccc;
+    /* box-shadow: -5px -5px 10px grey inset; */
 }
 
 div[contenteditable = "true"].text-box {
@@ -217,4 +218,27 @@ tr.visible{
 tbody > tr:hover {
     color: #0096c7;
     font-weight: bold;
+}
+
+h4 {
+    color: grey;
+}
+
+div#username, div#password {
+    width: 300px;
+}
+
+div.cancel-btn, div.login-btn { 
+    width: 285px;
+}
+
+div#cancel-btn, div#submit-btn {
+    text-align: center;
+    width: 150px;
+    border: 0.5px solid black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: lightgrey;
+    cursor: pointer;
+    box-shadow: 3px 2px 3px 3px lightgrey;
 }
