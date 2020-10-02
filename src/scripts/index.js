@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', e => {
-    const loggedInUser = "surveyee";
-    // const loggedInUser = "admin";
+    // const loggedInUser = "surveyee";
+    const loggedInUser = "admin";
+ 
     const loginPage = document.getElementById('login-container');
     // const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
