@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="src/styles/surveys.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <link rel="stylesheet" href="src/styles/dragAndDrop.css">
+        <link rel="stylesheet" href="src/styles/loginForm.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" integrity="sha512-SUJFImtiT87gVCOXl3aGC00zfDl6ggYAw5+oheJvRJ8KBXZrr/TMISSdVJ5bBarbQDRC2pR5Kto3xTR0kpZInA==" crossorigin="anonymous" />
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
@@ -35,10 +36,26 @@
                 <div id="div-form" style="display:flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 5%;">
                     <h2>Welcome to Opinion, where yours matter the most...</h2>
                     <h4>Please login to continue</h4>
-                    <div class="text-box" id="username" contenteditable="true" placeholder="Username or email"></div>
+                    <!-- <div class="text-box" id="username" contenteditable="true" placeholder="Username or email"></div>
                     <div class="text-box" id="password" contenteditable="true" placeholder="Password"></div>
                     <div class="btn cancel-btn">Cancel</div>
-                    <div class="btn login-btn">Login</div>
+                    <div class="btn login-btn">Login</div> -->
+
+                    <form class="login-form">
+                        <p>
+                          <!-- <label for="username">Your login</label> -->
+                          <input type="text" id="username" value="" placeholder="Enter Username" id="username">
+                        </p>
+                        <p>
+                          <!-- <label for="password">Your password</label> -->
+                          <input type="password" id="password" value="" placeholder="Enter Password" id="password" class="password">
+                          <button class="unmask" type="button" title="Mask/Unmask password to check content">Unmask</button>
+                        </p>
+                        <p>
+                            <div class="btn cancel-btn">Cancel</div>
+                            <div class="btn login-btn">Login</div>
+                        </p>
+                      </form>
                 </div>
             </div>
             <div id="admin-container" style="display:none">
@@ -140,5 +157,6 @@
     <script src="src/scripts/rankingFunctionality.js" defer></script>
     <script src="src/scripts/answer.js" defer></script>
     <script src="src/scripts/analysis.js" defer></script>
+    <script src="src/scripts/loginForm.js" defer></script>
     <script src="src/scripts/index.js" defer></script>
 </html>

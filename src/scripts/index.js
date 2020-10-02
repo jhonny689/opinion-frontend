@@ -26,33 +26,37 @@ function LoadWebPage(){
 
 function setupLoginPage(loginPage){
     setVisibility(loginPage);
-    setUpPwdInputListners();
+    // setUpPwdInputListners();
     setUpLoginClickListners(loginPage);
 }
 
-function setUpPwdInputListners(){
-    const pwd = document.querySelector('div#password');
-    pwd.addEventListener('keydown', e => {
-        console.log("*");
-    })
-}
+// function setUpPwdInputListners(){
+//     const pwd = document.querySelector('div#password');
+//     pwd.addEventListener('keydown', e => {
+//         console.log("*");
+//     })
+// }
 
 function setUpLoginClickListners(loginPage){
-    const username = loginPage.querySelector('div#username');
-    const password = loginPage.querySelector('div#password');
+    const username = loginPage.querySelector('input#username');
+    const password = loginPage.querySelector('input#password');
     loginPage.addEventListener('click', e => {
         if(e.target.matches('.cancel-btn')){
-            username.textContent = '';
-            password.textContent = '';
+            username.value = '';
+            password.value = '';
         }else if(e.target.matches('.login-btn')){
             console.log('clicked Login...');
             let authentication = {
-                username: username.textContent,
-                password: password.textContent,
+                username: username.value,
+                password: password.value,
             };
             let options = buildOptions('POST', authentication);
             let connection = dbConnect(getURL('authentications/'),options);
-            connection.then(user => setLoggedInUser(user));
+            connection.then(user => {
+                username.value = '';
+                password.value = '';
+                setLoggedInUser(user);
+            });
         }
     })
     const logoutBtn = document.querySelector('button.log-out');
@@ -64,9 +68,13 @@ function setUpLoginClickListners(loginPage){
 }
 
 function setLoggedInUser(user){
-    LOGGED_IN_USER = user[0].user.role;
-    USER_ID = user[0].user_id;
-    LoadWebPage();
+    if (user.length > 0){
+        LOGGED_IN_USER = user[0].user.role;
+        USER_ID = user[0].user_id;
+        LoadWebPage();
+    }else{
+        alert("Wrong username or password");
+    }
 }
 
 function setupUserPage(container, survey){
