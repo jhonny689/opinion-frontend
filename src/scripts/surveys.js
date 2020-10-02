@@ -82,7 +82,7 @@ class Survey{
     }
     static submit(jsonSurvey){
         let options = buildOptions('POST',jsonSurvey);
-        debugger;
+        //debugger;
         dbConnect(getURL('surveys/'),options);
     }
 

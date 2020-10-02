@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', e => {
     LoadWebPage();
 });
 function LoadWebPage(){
+    // debugger;
     const loginPage = document.getElementById('login-container');
-    // const adminPage = document.getElementById('admin-container');
+    //const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
     const surveyContainer = document.getElementById('survey-container');
 
@@ -30,13 +31,6 @@ function setupLoginPage(loginPage){
     setUpLoginClickListners(loginPage);
 }
 
-// function setUpPwdInputListners(){
-//     const pwd = document.querySelector('div#password');
-//     pwd.addEventListener('keydown', e => {
-//         console.log("*");
-//     })
-// }
-
 function setUpLoginClickListners(loginPage){
     const username = loginPage.querySelector('input#username');
     const password = loginPage.querySelector('input#password');
@@ -45,6 +39,7 @@ function setUpLoginClickListners(loginPage){
             username.value = '';
             password.value = '';
         }else if(e.target.matches('.login-btn')){
+            //debugger;
             console.log('clicked Login...');
             let authentication = {
                 username: username.value,
@@ -61,9 +56,7 @@ function setUpLoginClickListners(loginPage){
     })
     const logoutBtn = document.querySelector('button.log-out');
     logoutBtn.addEventListener('click', e => {
-        LOGGED_IN_USER = null;
-        USER_ID = null;
-        LoadWebPage();
+        location.reload();
     })
 }
 
@@ -83,6 +76,7 @@ function setupUserPage(container, survey){
     const surveysTable = document.getElementById('surveys-table');
     const loginPage = document.getElementById('login-container');
 
+    document.getElementById('admin-container').style.display = 'none';
     loginPage.style.display = 'none';
     setVisibility(container, survey);
     setCategories(categoryDD);
@@ -159,7 +153,7 @@ function setSurveyors(surveyorDD){
 function setSurveysList(surveysTable){
     const surveysPromise = dbConnect(getURL(`surveys?status=published&user=${USER_ID}`));
     const surveysTableBody = surveysTable.querySelector('tbody');
-    
+    //debugger;
     surveysPromise.then(dbSurveys => {
         Survey.createAll(dbSurveys, surveysTableBody);
         if ( $.fn.dataTable.isDataTable( '#surveys-table' ) ) {
@@ -230,6 +224,7 @@ function setupSurveyClicksListener(container){
 
             Survey.submit(prepSurvey(USER_ID, "draft", container));
             container.innerHTML="";
+            renderDrafts(document.querySelector('div#drafts'));
         }else if(e.target.matches('.publish-survey-btn')){
 
             Survey.submit(prepSurvey(USER_ID, "published", container));
@@ -436,6 +431,7 @@ function getQuestTypeDropDown(){
 }
 
 function renderDrafts(container){
+    //debugger;
     if (container.querySelector('ul')){
         container.querySelector('ul').remove();
     }

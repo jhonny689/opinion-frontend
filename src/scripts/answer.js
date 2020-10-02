@@ -56,7 +56,8 @@ class Answer{
         console.dir(this.answersheet);
         let options = buildOptions('POST',this.answersheet);
         dbConnect(getURL('responses/'),options)
-        .then(json => {
+        .then(() => {
+            //debugger;
             surveysTable.querySelector('tbody').innerHTML='';
             setSurveysList(surveysTable);
         })

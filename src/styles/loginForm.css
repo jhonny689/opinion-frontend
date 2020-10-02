@@ -21,12 +21,12 @@
     color: #989598;
    }*/
   form p { position: relative; }
-  label { 
+  /* label { 
     position: absolute;
     left:-9999px;
     text-indent: -9999px;
-  } 
-  input {
+  }  */
+  form.login-form input {
     width: 250px;
     padding: 15px 12px;
     margin-bottom: 5px;
