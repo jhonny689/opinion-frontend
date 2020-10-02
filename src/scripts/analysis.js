@@ -98,7 +98,11 @@ class Analytics{
             
             let bgColor = generateColorArray(colors, labels.length);
             let borderColor = generateColorArray(colors, labels.length);
-            let ctx = document.getElementById(`myChart${d.question_type}`).getContext('2d');
+            let canvas = document.getElementById(`myChart${d.question_type}`);
+            let ctx = canvas.getContext('2d');
+            let questText = document.createElement('p');
+            questText.textContent = d.label;
+            canvas.parentElement.append(questText);
             console.log('right before creating the chart', d);
             let chart = createChart(ctx, types[chartType[i]], generateChartData(labels, d.label, values, bgColor,borderColor), generaterChartOptions());
             console.log('right after creating the chart');
@@ -107,6 +111,7 @@ class Analytics{
     }
 
     static prepareDataForAnalysis(data){
+        // debugger;
         const newData = [];
         const questions = _.values(_.groupBy(data,'question_id'));
         console.log(questions);
@@ -118,6 +123,10 @@ class Analytics{
     }
 
     static setupQuestAnalysis(quest, object){
+<<<<<<< HEAD
+=======
+        // debugger;
+>>>>>>> thurdayEveBranch
         let question_type = quest[0]["question_type"];
         let label = quest[0]["question_text"];
         let question_type_id = quest[0]["question_type"];
