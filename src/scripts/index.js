@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', e => {
     LoadWebPage();
 });
 function LoadWebPage(){
-    // debugger;
+    //debugger;
     const loginPage = document.getElementById('login-container');
     //const adminPage = document.getElementById('admin-container');
     const userPage = document.getElementById('user-container');
@@ -71,6 +71,7 @@ function setLoggedInUser(user){
 }
 
 function setupUserPage(container, survey){
+    // debugger;
     const categoryDD = document.querySelector('select#category');
     const surveyorDD = document.querySelector('select#surveyor');
     const surveysTable = document.getElementById('surveys-table');
@@ -153,7 +154,7 @@ function setSurveyors(surveyorDD){
 function setSurveysList(surveysTable){
     const surveysPromise = dbConnect(getURL(`surveys?status=published&user=${USER_ID}`));
     const surveysTableBody = surveysTable.querySelector('tbody');
-    //debugger;
+    // debugger;
     surveysPromise.then(dbSurveys => {
         Survey.createAll(dbSurveys, surveysTableBody);
         if ( $.fn.dataTable.isDataTable( '#surveys-table' ) ) {
@@ -266,6 +267,9 @@ function createQuestion(container){
     const qOptions = container.querySelector('#qOptions').textContent;
 
     let question = Question.prepareSurvey({question_type_id: parseInt(qType), question_text: qText, choices: qOptions}); 
+    
+    // container.outerHTML = Question.prepareDraftQuestion(question);
+    // document.querySelector('button.load-next').remove();
     container.outerHTML = question.outerHTML;
 
 }
